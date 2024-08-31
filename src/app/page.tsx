@@ -1,4 +1,5 @@
 import { Box } from '~/components/Box';
+import {Header} from '~/components/header';
 import {TestData} from '~/test-data';
 
 export default async function Home() {
@@ -13,7 +14,7 @@ export default async function Home() {
 
 	return (
     <main className='flex h-screen w-full flex-col items-center'>
-      <div className='h-full w-full'>
+		<div className='h-full w-full'>
         <Box data={data}/>
       </div>
     </main>

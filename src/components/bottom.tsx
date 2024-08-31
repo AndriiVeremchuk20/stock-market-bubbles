@@ -1,7 +1,6 @@
 import { Edges } from '@react-three/drei';
 import { useThree } from '@react-three/fiber';
 import { useBox, usePlane } from '@react-three/p2';
-import { headers } from 'next/headers';
 import { useMemo } from 'react';
 import { Mesh } from 'three';
 
@@ -11,8 +10,7 @@ export const Bottom = () => {
 
   const [ref] = usePlane(() => ({
     position: [0, -viewport.height / 2], // Adjust position to fit the viewport
-		angle: Math.PI,
-		type: "Static"
+		angle: Math.sin(Math.PI),
   }));
 
   return (
@@ -30,7 +28,6 @@ export const Top = () => {
   const [ref] = usePlane(() => ({
     position: [0, viewport.height / 2], // Adjust position to fit the viewport
 		angle: -Math.PI,
-		type: "Static",
   }));
 
   return (
@@ -48,14 +45,12 @@ export const LeftBoundary = () => {
 
   const [ref] = usePlane(() => ({
     position: [-viewport.width / 2, 0], // Adjust position to fit the viewport
-		angle: - Math.PI,
-
-		type: "Static",
+		angle: Math.PI/2,
   }));
 
   return (
     <mesh ref={ref as React.RefObject<Mesh>}>
-      <planeGeometry args={[1, height]} /> {/* Slightly thicker boundary */}
+      <planeGeometry args={[height, 1]} /> {/* Slightly thicker boundary */}
       <meshStandardMaterial color='green' wireframe/>
     </mesh>
   );
@@ -66,9 +61,8 @@ export const RightBoundary = () => {
   const height = useMemo(() => viewport.height, [viewport.height]);
 
   const [ref] = usePlane(() => ({
-			type: "Static",
 		position: [viewport.width / 2, 0], // Adjust position to fit the viewport
-		angle: Math.PI,
+		angle: -Math.PI,
   }));
 
   return (

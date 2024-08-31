@@ -6,6 +6,7 @@ import { Physics } from '@react-three/p2';
 import { type StockData } from '~/test-data';
 import { Bottom, LeftBoundary, RightBoundary, Top } from './bottom';
 import {Border} from './border';
+import {OrbitControls} from '@react-three/drei';
 
 export const Box = ({data}:{data: StockData[]}) => {
   return (
@@ -15,13 +16,13 @@ export const Box = ({data}:{data: StockData[]}) => {
         <directionalLight position={[0, 0, 10]} />
         <color attach='background' args={['black']} />
 
-					<Top/>
-					<RightBoundary/>
-					<LeftBoundary/>
-					<Bottom/>
           {data.map((d) => (
             <Bubble key={d.id} name={d.name} image={d.image} value={d.value} />
           ))}
+					<Bottom/>
+					<Top/>
+
+					<LeftBoundary/>
       </Physics>
     </Canvas>
   );

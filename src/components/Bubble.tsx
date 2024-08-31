@@ -15,10 +15,9 @@ export const Bubble = ({
 }) => {
   const [isDraving, setIsDraving] = useState<boolean>(false);
   const [ref, api] = useCircle(() => ({
-    mass: 0,
-		position: [Math.random() * 5 - 3, Math.random() * 10 - 5], // Random starting position
+    mass: 1,
+		position: [Math.random() * 5 - 1.5, Math.random() * 10 - 6.7], // Random starting position
     restitution: 1, // Bounciness factor, adjust for more or less bounce
-		type: "Dynamic"
   }));
 
   const handlePointerMove = (event: ThreeEvent<PointerEvent>) => {
