@@ -16,7 +16,7 @@ export default async function Home() {
   return (
     <main className='flex h-screen w-full flex-col items-center bg-red-200'>
       <div className='h-full w-full p-4'>
-        <Box data={data} />
+        <Box />
       </div>
     </main>
   );

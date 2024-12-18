@@ -50,7 +50,6 @@ export const Box = () => {
 		  <Bubble />
         </group>
       </Physics>
-	  <OrbitControls/>
     </Canvas>
   );
 };
