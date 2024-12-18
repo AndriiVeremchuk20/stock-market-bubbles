@@ -1,5 +1,4 @@
 import { Box } from '~/components/Box';
-import { Header } from '~/components/header';
 import { TestData } from '~/test-data';
 
 export default async function Home() {
