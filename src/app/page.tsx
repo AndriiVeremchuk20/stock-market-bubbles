@@ -1,4 +1,6 @@
-import { Box } from '~/components/Box';
+//import { Box } from '~/components/Box';
+import { Scene } from 'three';
+import { Box } from '~/components/Scene';
 import { TestData } from '~/test-data';
 
 export default async function Home() {
@@ -15,7 +17,7 @@ export default async function Home() {
 
   return (
     <main className='flex h-screen w-full flex-col items-center bg-red-200'>
-      <div className='h-full w-full p-4'>
+      <div className='h-full w-full'>
         <Box />
       </div>
     </main>
