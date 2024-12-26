@@ -1,4 +1,4 @@
-import { PlaneProps, usePlane } from '@react-three/cannon';
+/* import { PlaneProps, useS } from '@react-three/rapier';
 import { useThree } from '@react-three/fiber';
 import { useEffect } from 'react';
 import { Mesh } from 'three';
@@ -15,7 +15,7 @@ const Plane = (props: PlaneProps) => {
   return (
     <mesh ref={ref}>
       <planeGeometry />
-      <meshStandardMaterial color={"none"}/>
+      <meshStandardMaterial/>
     </mesh>
   );
 };
@@ -33,3 +33,5 @@ export const Borders = () => {
     </>
   );
 };
+
+*/

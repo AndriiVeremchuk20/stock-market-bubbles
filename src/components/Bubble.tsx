@@ -1,22 +1,53 @@
-import { SphereProps, useSphere } from '@react-three/cannon';
-import { useThree } from '@react-three/fiber';
-import { Mesh } from 'three';
+import { RigidBody, RapierRigidBody, BallCollider } from "@react-three/rapier";
+import { useRef, useState } from "react";
+import { useFrame } from "@react-three/fiber";
+import * as THREE from "three";
+import {Float} from "@react-three/drei";
 
-export const Bubble = (props: SphereProps) => {
+interface BubbleProps {
+  scale: number;
+}
 
-  const radius = Math.random() * (1-.5) + .5;
-  const { viewport } = useThree();
-  const [ref, api] = useSphere<Mesh>(() => ({
-	mass: radius,
-    position: [4 - Math.random() * 8, viewport.height * 3, 0],
-	args: [radius],
-    ...props,
-  }));
+const Bubble: React.FC<BubbleProps> = ({ scale }) => {
+  const bubbleRef = useRef<RapierRigidBody>(null);
+  const [initialPos] = useState<[number, number, number]>([
+    THREE.MathUtils.randFloatSpread(4),
+    THREE.MathUtils.randFloatSpread(4),
+    0,
+  ]);
 
+  const vec = new THREE.Vector3();
+/*
+  useFrame(() => {
+    if (bubbleRef.current) {
+      const translation = bubbleRef.current.translation();
+      if (translation) {
+        bubbleRef.current.applyImpulse(
+          vec.copy(translation).negate().multiplyScalar(scale * scale),
+          true
+        );
+      }
+    }
+  });
+*/
   return (
-    <mesh ref={ref}>
-      <sphereGeometry args={[radius, 10,4]} />
-      <meshBasicMaterial toneMapped={false} wireframe vertexColors color={'red'} />
-    </mesh>
+    <RigidBody
+      ref={bubbleRef}
+      position={initialPos}
+      colliders="ball"
+	  restitution={0.5}
+	  enabledRotations={[false, false, false]}
+      enabledTranslations={[true, true, false]} linearDamping={2} angularDamping={1} friction={0.1}
+    >
+	<Float speed={2}>
+	 <BallCollider args={[1.1]} />
+      <mesh scale={scale}>
+        <circleGeometry args={[1, 64]} />
+        <meshStandardMaterial color="red" />
+      </mesh>
+	</Float>
+    </RigidBody>
   );
 };
+
+export default Bubble;
