@@ -11,13 +11,13 @@ export const TestData: StockData[] = [
     name: 'Tesla',
     image:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Tesla_logo.png/640px-Tesla_logo.png',
-    value: 152.34,
+    value: -152.34,
   },
   {
     id: 2,
     name: 'Nvidia',
     image: 'https://cdn-icons-png.flaticon.com/512/732/732230.png',
-    value: 98.67,
+    value: -98.67,
   },
   {
     id: 3,
