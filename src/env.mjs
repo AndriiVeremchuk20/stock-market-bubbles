@@ -7,7 +7,7 @@ export const env = createEnv({
    * Will throw if you access these variables on the client.
    */
   server: {
-    TIINGO_API_KEY: z.string(),
+    FMP_API_KEY: z.string(),
   },
   /*
    * Environment variables available on the client (and server).
@@ -22,6 +22,6 @@ export const env = createEnv({
    * 💡 You'll get type errors if not all variables from `server` & `client` are included here.
    */
   runtimeEnv: {
-    TIINGO_API_KEY: process.env.TIINGO_API_KEY,
+    FMP_API_KEY: process.env.FMP_API_KEY,
   },
 });
