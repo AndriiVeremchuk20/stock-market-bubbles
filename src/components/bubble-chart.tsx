@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { Stock } from '~/services/finance-data/fmp-api';
+import { Stock } from '~/services/fmp-api';
 import * as d3 from 'd3';
 
 export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
@@ -11,7 +11,7 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
     const width = window.innerWidth;
     const height = window.innerHeight;
 
-	//const screenCof = height / width;
+    //const screenCof = height / width;
 
     const svg = d3
       .select(svgRef.current)
@@ -27,27 +27,44 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
       .scaleLinear<string>()
       .domain([-1, 0, 1])
       .range([
-        'rgba( 246, 126, 121,0.4)',
-        'rgba( 169, 169, 169,0.4)',
-        'rgba( 153, 246, 166,0.4)',
+        'rgba( 246, 126, 121,0.2)',
+        'rgba( 169, 169, 169,0.2)',
+        'rgba( 153, 246, 166,0.2)',
       ]);
 
-	  const fontSize = d3.scaleLinear<number>()
-	  .domain([-10, 10]).range([10, 12]);
+    const fontSize = d3.scaleSqrt()
+			.domain([-10, d3.max(stockDataList, (d) => d.marketCap)!]).range([10, 25]);
 
     const radiusScale = d3
       .scaleSqrt()
-      .domain([0, d3.max(stockDataList, d => d.price)!])
-      .range([30, 200]);
-
+      .domain([0, d3.max(stockDataList, (d) => d.marketCap)!])
+      .range([20, 50]);
 
     const simulation = d3
       .forceSimulation(stockDataList)
-      .force('charge', d3.forceManyBody().strength(-10))
-      .force('center', d3.forceCenter(width / 2, height / 2))
+      .velocityDecay(0.6)
+      .force('charge', d3.forceManyBody().strength(-10)) // чуть слабее отталкивание
+      .force(
+        'x',
+        d3
+          .forceX()
+          .strength(0.05)
+          .x((d) => {
+            return Math.random() * width; // или по d.id
+          })
+      )
+      .force(
+        'y',
+        d3
+          .forceY()
+          .strength(0.05)
+          .y((d) => {
+            return Math.random() * height;
+          })
+      )
       .force(
         'collision',
-        d3.forceCollide((d) => radiusScale(d.price) + 4)
+        d3.forceCollide((d) => radiusScale(d.marketCap) + 5)
       )
       .on('tick', ticked);
 
@@ -67,46 +84,79 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
     node
       .append('circle')
       .transition()
-      .duration(1500)
+      .duration(1000)
       .ease(d3.easeCubicOut)
-      .attr('r', (d) => radiusScale(d.price) )
-      .attr('fill', (d) => color(d.beta))
+      .attr('r', (d) => radiusScale(d.marketCap))
       .attr('stroke', (d) => scaleColor(d.beta));
 
+    /*
+	 node.on('click', function (event, d) {
+  
+		 const g = d3.select(this);
+
+  // Анимация исчезновения
+  g.select('circle')
+    .transition()
+    .duration(400)
+    .attr('r', radiusScale(d.price) * 2)
+    .style('opacity', 0);
+
+  g.selectAll('text, image')
+    .transition()
+    .duration(400)
+    .style('opacity', 0);
+
+  // Удаление из DOM и из симуляции
+  setTimeout(() => {
+    // Удаляем узел из DOM
+    g.remove();
+
+    // Удаляем из данных симуляции
+    const index = stockDataList.indexOf(d);
+    if (index > -1) {
+      stockDataList.splice(index, 1);
+    }
+
+    simulation.nodes(stockDataList); // обновляем симуляцию
+    simulation.alpha(1).restart();   // перезапускаем симуляцию
+  }, 400);
+});
+
+*/
     node
       .append('image')
       .transition()
       .duration(500)
       .ease(d3.easeCubicOut)
       .attr('href', (d) => d.logo!)
-      .attr('x', (d) => -radiusScale(d.price) * .4)
-      .attr('y', (d) => -radiusScale(d.price) * 0.8)
-      .attr('width', (d) => radiusScale(d.price) * .8)
-      .attr('height', (d) => radiusScale(d.price) * .8)
+      .attr('x', (d) => -radiusScale(d.marketCap) * 0.4)
+      .attr('y', (d) => -radiusScale(d.marketCap) * 0.8)
+      .attr('width', (d) => radiusScale(d.marketCap) * 0.8)
+      .attr('height', (d) => radiusScale(d.marketCap) * 0.8)
       .attr('clip-path', (d, i) => `url(#clip-${i})`);
 
     // 3. Название компании — по центру
     node
       .append('text')
-	  .attr('text-anchor', 'middle')
-      .attr('y', (d) => radiusScale(d.price) * 0.3) // немного ниже центра
+      .attr('text-anchor', 'middle')
+      .attr('y', (d) => radiusScale(d.marketCap) * 0.3) // немного ниже центра
       .attr('fill', 'white')
-      .attr('font-size',"14px")
+      .attr('font-size',d=> `${fontSize(d.marketCap)}px`)
       .text((d) => d.symbol);
 
     // 4. Изменение ценsы — ниже названия
     node
       .append('text')
       .attr('text-anchor', 'middle')
-      .attr('y', (d) => radiusScale(d.price) * 0.6)
-      .attr('fill', "white")
-      .attr('font-size', "10px")
-	  .attr('font-weight', "bold")
+      .attr('y', (d) => radiusScale(d.marketCap) * 0.6)
+      .attr('fill', 'white')
+      .attr('font-size', '10px')
+      .attr('font-weight', 'bold')
       .text((d) => `${d.beta > 0 ? '+' : ''}${d.beta.toFixed(2)}%`);
 
     function ticked() {
       node.attr('transform', (d) => {
-        const r = radiusScale(d.price);
+        const r = radiusScale(d.marketCap) + 5;
         d.x = Math.max(r, Math.min(width - r, d.x!));
         d.y = Math.max(r, Math.min(height - r, d.y!));
 
@@ -138,7 +188,7 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
   }, []);
 
   return (
-    <div className='bg-indigo-900 h-screen'>
+    <div className='h-full w-full'>
       <svg ref={svgRef} />
     </div>
   );
