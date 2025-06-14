@@ -11,7 +11,7 @@ const fetcher = (url: string) => fetch(url).then((r) => r.json());
 export default function Home() {
   const { skip, limit } = AppStore((s) => s);
   const { data, error, isLoading } = useSWR<{ data: Stock[] }>(
-    `http://localhost:3000/api/stock/screener?skip=${skip}&limit=${limit}`,
+    `/api/stock/screener?skip=${skip}&limit=${limit}`,
     fetcher,
     { refreshInterval: 5 * 60 * 1000 }
   );
