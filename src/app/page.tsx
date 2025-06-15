@@ -5,6 +5,7 @@ import useSWR from 'swr';
 import { Stock } from '~/services/fmp-api';
 import { AppStore } from '~/store/app';
 import Header from '~/components/header';
+import Footer from '~/components/footer';
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
@@ -21,11 +22,12 @@ export default function Home() {
   if (isLoading) return <div>Wait</div>;
 
   return ( 
-    <main className='h-screen w-full bg-primary text-secondary'>
-    <Header/>  
+    <main className='min-h-screen w-full bg-primary text-secondary'>
+	<Header/>
 	<div className='w-full h-full'>
 	 <BuubleChart stockDataList={data!.data} />
 	</div>
+	<Footer/>
     </main>
   );
 }

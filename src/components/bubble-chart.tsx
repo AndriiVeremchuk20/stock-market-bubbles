@@ -8,8 +8,8 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
   const svgRef = useRef<SVGSVGElement | null>(null);
 
   useEffect(() => {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+    const width = window.innerWidth - 50;
+    const height = window.innerHeight - 50;
 
     //const screenCof = height / width;
 
@@ -37,8 +37,8 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
 
     const radiusScale = d3
       .scaleSqrt()
-      .domain([0, d3.max(stockDataList, (d) => d.marketCap)!])
-      .range([20, 50]);
+      .domain([d3.min(stockDataList, d=>d.marketCap)!, d3.max(stockDataList, (d) => d.marketCap)!])
+      .range([30, 150]);
 
     const simulation = d3
       .forceSimulation(stockDataList)
@@ -87,7 +87,8 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
       .duration(1000)
       .ease(d3.easeCubicOut)
       .attr('r', (d) => radiusScale(d.marketCap))
-      .attr('stroke', (d) => scaleColor(d.beta));
+      .attr('stroke', (d) => scaleColor(d.beta))
+	  .attr('stroke-width', "2px");
 
     /*
 	 node.on('click', function (event, d) {
@@ -125,6 +126,7 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
 */
     node
       .append('image')
+	  .attr('display', d => radiusScale(d.marketCap)  < 30 ? 'none' : null)
       .transition()
       .duration(500)
       .ease(d3.easeCubicOut)
@@ -188,8 +190,8 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
   }, []);
 
   return (
-    <div className='h-full w-full'>
-      <svg ref={svgRef} />
+    <div className='h-full w-full flex justify-center items-center'>
+      <svg ref={svgRef} className='bg-primary/90 p-2'/>
     </div>
   );
 };
