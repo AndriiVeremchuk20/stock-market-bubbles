@@ -17,14 +17,14 @@ export default function Header() {
 }
 
 const Filters = () => {
-  const { setSkip } = AppStore();
+  const { setSkip, skip } = AppStore();
 
   const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setSkip({ skip: Number(e.target.value) });
   };
 
   return ( <select
-      defaultValue={100}
+      defaultValue={skip}
       onChange={handleSelectChange}
       className='bg-primary border border-white rounded-md p-2'
     >
