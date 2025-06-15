@@ -24,9 +24,9 @@ export const GET = async(req: Request) => {
 
   const data = await getFinnData({});
 
-  cache = { data, timestamp: Date.now() };
+  cache = { data: data.sort((a,b)=>b.volume - a.volume) , timestamp: Date.now() };
 
   return Response.json({
-    data: data.slice(skip, skip + limit),
+    data: cache.data.slice(skip, skip + limit),
   });
 }
