@@ -1,6 +1,6 @@
 'use client';
 
-import {ChartCandlestick, Info, Settings} from 'lucide-react';
+import { ChartCandlestick, Info, Settings } from 'lucide-react';
 import { ChangeEvent } from 'react';
 import { AppStore } from '~/store/app';
 
@@ -8,25 +8,26 @@ export default function Header() {
   return (
     <header className='flex h-[50px] w-full justify-between border-b border-secondary bg-primary px-5'>
       <Logo />
-	  <div className='flex items-center gap-10'>
-      <Filters />
-	  <Tools/> 
-	  </div>
+      <div className='flex items-center gap-10'>
+        <Filters />
+        <Tools />
+      </div>
     </header>
   );
 }
 
 const Filters = () => {
-  const { setSkip } = AppStore();
+  const { setSkip, skip } = AppStore();
 
   const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setSkip({ skip: Number(e.target.value) });
   };
 
-  return ( <select
-      defaultValue={100}
+  return (
+    <select
+      defaultValue={skip}
       onChange={handleSelectChange}
-      className='bg-primary border border-white rounded-md p-2'
+      className='border-white rounded-md border bg-primary p-2'
     >
       <option selected value={100}>
         0 - 100
@@ -38,21 +39,23 @@ const Filters = () => {
       <option>📈 Best Gainers</option>
       <option>📉 Best Losers</option>
     </select>
-      );
+  );
 };
 
 const Logo = () => {
-  return <div className='flex justify-center items-center font-bold'>
-<ChartCandlestick />
-<span>STOCK BUBBLES</span>
-  </div>;
+  return (
+    <div className='flex items-center justify-center font-bold'>
+      <ChartCandlestick />
+      <span>STOCK BUBBLES</span>
+    </div>
+  );
 };
 
-
 const Tools = () => {
-return <div className='flex items-center gap-10'>
-	<Info />
-	<Settings />
-</div>
-
-}
+  return (
+    <div className='flex items-center gap-10'>
+      <Info />
+      <Settings />
+    </div>
+  );
+};
