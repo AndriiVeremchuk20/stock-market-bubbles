@@ -41,8 +41,8 @@ export const getFinnData = async ({
 }) => {
   const data = await FMPClient.get('stock-screener', {
     searchParams: {
-	  volumeMoreThan: 10000000,
-	  limit: 500,
+      volumeMoreThan: 10000000,
+      limit: 500,
     },
   }).json<Stock[]>();
 

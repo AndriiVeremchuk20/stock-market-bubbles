@@ -9,7 +9,7 @@ type CustomCache = {
 
 let cache: CustomCache = null;
 
-export const GET = async(req: Request) => {
+export const GET = async (req: Request) => {
   const { searchParams } = new URL(req.url);
 
   const skip = Number(searchParams.get('skip'));
@@ -17,16 +17,18 @@ export const GET = async(req: Request) => {
 
   if (cache && Date.now() - cache.timestamp < 5 * 60 * 1000) {
     return Response.json({
-      data: cache.data
-        .slice(skip, skip + limit),
+      data: cache.data.slice(skip, skip + limit),
     });
   }
 
   const data = await getFinnData({});
 
-  cache = { data: data.sort((a,b)=>b.volume - a.volume) , timestamp: Date.now() };
+  cache = {
+    data: data.sort((a, b) => b.volume - a.volume),
+    timestamp: Date.now(),
+  };
 
   return Response.json({
     data: cache.data.slice(skip, skip + limit),
   });
-}
+};

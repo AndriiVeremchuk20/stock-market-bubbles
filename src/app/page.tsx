@@ -21,13 +21,13 @@ export default function Home() {
 
   if (isLoading) return <div>Wait</div>;
 
-  return ( 
+  return (
     <main className='min-h-screen w-full bg-primary text-secondary'>
-	<Header/>
-	<div className='w-full h-full'>
-	 <BuubleChart stockDataList={data!.data} />
-	</div>
-	<Footer/>
+      <Header />
+      <div className='h-full w-full'>
+        <BuubleChart stockDataList={data!.data} />
+      </div>
+      <Footer />
     </main>
   );
 }

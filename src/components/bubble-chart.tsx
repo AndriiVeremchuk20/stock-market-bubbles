@@ -32,12 +32,17 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
         'rgba( 153, 246, 166,0.2)',
       ]);
 
-    const fontSize = d3.scaleSqrt()
-			.domain([-10, d3.max(stockDataList, (d) => d.marketCap)!]).range([10, 25]);
+    const fontSize = d3
+      .scaleSqrt()
+      .domain([-10, d3.max(stockDataList, (d) => d.marketCap)!])
+      .range([10, 25]);
 
     const radiusScale = d3
       .scaleSqrt()
-      .domain([d3.min(stockDataList, d=>d.marketCap)!, d3.max(stockDataList, (d) => d.marketCap)!])
+      .domain([
+        d3.min(stockDataList, (d) => d.marketCap)!,
+        d3.max(stockDataList, (d) => d.marketCap)!,
+      ])
       .range([30, 150]);
 
     const simulation = d3
@@ -88,7 +93,7 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
       .ease(d3.easeCubicOut)
       .attr('r', (d) => radiusScale(d.marketCap))
       .attr('stroke', (d) => scaleColor(d.beta))
-	  .attr('stroke-width', "2px");
+      .attr('stroke-width', '2px');
 
     /*
 	 node.on('click', function (event, d) {
@@ -126,7 +131,7 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
 */
     node
       .append('image')
-	  .attr('display', d => radiusScale(d.marketCap)  < 30 ? 'none' : null)
+      .attr('display', (d) => (radiusScale(d.marketCap) < 30 ? 'none' : null))
       .transition()
       .duration(500)
       .ease(d3.easeCubicOut)
@@ -143,7 +148,7 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
       .attr('text-anchor', 'middle')
       .attr('y', (d) => radiusScale(d.marketCap) * 0.3) // немного ниже центра
       .attr('fill', 'white')
-      .attr('font-size',d=> `${fontSize(d.marketCap)}px`)
+      .attr('font-size', (d) => `${fontSize(d.marketCap)}px`)
       .text((d) => d.symbol);
 
     // 4. Изменение ценsы — ниже названия
@@ -190,8 +195,8 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
   }, []);
 
   return (
-    <div className='h-full w-full flex justify-center items-center'>
-      <svg ref={svgRef} className='bg-primary/90 p-2'/>
+    <div className='flex h-full w-full items-center justify-center'>
+      <svg ref={svgRef} className='bg-primary/90 p-2' />
     </div>
   );
 };
