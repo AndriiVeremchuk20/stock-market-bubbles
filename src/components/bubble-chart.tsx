@@ -196,7 +196,7 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
 
   return (
     <div className='flex h-full w-full items-center justify-center'>
-      <svg ref={svgRef} className='bg-primary/90 p-2' />
+      <svg ref={svgRef} className='bg-primary/90 p-1' />
     </div>
   );
 };
