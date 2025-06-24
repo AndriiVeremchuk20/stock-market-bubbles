@@ -8,6 +8,7 @@ export const env = createEnv({
    */
   server: {
     FMP_API_KEY: z.string(),
+	REDIS_URL: z.string(),
   },
   /*
    * Environment variables available on the client (and server).
@@ -23,5 +24,6 @@ export const env = createEnv({
    */
   runtimeEnv: {
     FMP_API_KEY: process.env.FMP_API_KEY,
+	REDIS_URL: process.env.REDIS_URL,
   },
 });
