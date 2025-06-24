@@ -21,7 +21,7 @@ export default function Header() {
 }
 
 const Filters = () => {
-  const { setSkip, skip, setSort, } = AppStore();
+  const { skip } = AppStore();
 
   const {setState} = AppStore
 
