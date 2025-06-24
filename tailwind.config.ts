@@ -10,6 +10,8 @@ const config: Config = {
     colors: {
       primary: '#030303',
       secondary: '#FFFF',
+      green: '#008000',
+      red: '#FF0000',
     },
   },
   plugins: [],
