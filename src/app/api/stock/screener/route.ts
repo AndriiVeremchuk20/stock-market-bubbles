@@ -1,34 +1,52 @@
-import { getFinnData, Stock } from '~/services/fmp-api';
+import { getStockData, Stock } from '~/services/fmp-api';
 
 export const dynamic = 'force-dynamic';
 
-type CustomCache = {
+/*
+type DataCache = {
   data: Stock[];
   timestamp: number;
 } | null;
+*/
 
-let cache: CustomCache = null;
+//let cache: CustomCache = null;
+
+const volumeMoreThan = 10_000_000;
 
 export const GET = async (req: Request) => {
   const { searchParams } = new URL(req.url);
 
   const skip = Number(searchParams.get('skip'));
   const limit = Number(searchParams.get('limit'));
+  const betaMoreThan = Number(searchParams.get("betaMoreThan"));
+  const betaLowerThan = Number(searchParams.get("betaLowerThan"));
 
-  if (cache && Date.now() - cache.timestamp < 5 * 60 * 1000) {
-    return Response.json({
-      data: cache.data.slice(skip, skip + limit),
-    });
+
+  let args: any = {limit: 550, volumeMoreThan};
+
+  if(betaMoreThan){
+		args = {...args, betaMoreThan};
+  }
+  else if(betaLowerThan){
+		args = {...args, betaLowerThan};
   }
 
-  const data = await getFinnData({});
 
-  cache = {
-    data: data.sort((a, b) => b.volume - a.volume),
-    timestamp: Date.now(),
-  };
+  //if (cache && Date.now() - cache.timestamp < 60 * 60 * 1000) {
+  //  return Response.json({
+   //   data: cache.data.slice(skip, skip + limit),
+   // });
+ // }
+  
+
+  const data = await getStockData({...args});
+
+  //cache = {
+  //  data: data.sort((a, b) => b.volume - a.volume),
+  //  timestamp: Date.now(),
+  //};
 
   return Response.json({
-    data: cache.data.slice(skip, skip + limit),
+    data: data.sort((a,b)=>b.volume - a.volume).slice(skip, skip + limit),
   });
 };

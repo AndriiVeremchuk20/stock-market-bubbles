@@ -1,7 +1,7 @@
 export const Skeleton = () => {
-
-	return <div className="h-full w-full bg-secondary/10 animate-pulse flex justify-center items-center">
-	<div className="animate-pulse text-2xl font-bold">Wait</div>
-	</div>
-
-}
+  return (
+    <div className='flex h-full w-full animate-pulse items-center justify-center bg-secondary/10'>
+      <div className='animate-pulse text-2xl font-bold'>Wait</div>
+    </div>
+  );
+};

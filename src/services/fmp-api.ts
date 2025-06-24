@@ -32,24 +32,27 @@ export interface Stock extends SimulationNodeDatum {
   logo?: string;
 }
 
-export const getFinnData = async ({
-  betaMoteThan,
-  betaLowerThan,
-}: {
-  betaMoteThan?: number;
-  betaLowerThan?: number;
+// screener
+export const getStockData = async (searchParams: {
+  betaMoreThan?: number;
+  betaLowerthan?: number;
+  limit?: number;
+  volumeMoreThan?: number;
 }) => {
-  const data = await FMPClient.get('stock-screener', {
-    searchParams: {
-      volumeMoreThan: 10000000,
-      limit: 500,
-    },
-  }).json<Stock[]>();
+
+	const sp = Object.entries(searchParams)
+    .filter(([key, value]) => value !== undefined)
+    .reduce((acc, [key, value]) => {
+      acc[key] = value;
+      return acc;
+    }, {} as Record<string, number>);
+	
+  const data = await FMPClient.get('stock-screener', { searchParams: sp }).json<Stock[]>();
 
   return data
     .map((d) => ({ logo: getLogoUrl({ symbol: d.symbol }), ...d }))
     .filter((i) => i.beta);
 };
 
-export const getLogoUrl = ({ symbol }: { symbol: string }) =>
+const getLogoUrl = ({ symbol }: { symbol: string }) =>
   `https://financialmodelingprep.com/image-stock/${symbol}.png?apikey=${FMP_API_KEY}`;
