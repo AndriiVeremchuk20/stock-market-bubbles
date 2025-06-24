@@ -30,21 +30,9 @@ export const GET = async (req: Request) => {
   else if(betaLowerThan){
 		args = {...args, betaLowerThan};
   }
-
-
-  //if (cache && Date.now() - cache.timestamp < 60 * 60 * 1000) {
-  //  return Response.json({
-   //   data: cache.data.slice(skip, skip + limit),
-   // });
- // }
   
 
   const data = await getStockData({...args});
-
-  //cache = {
-  //  data: data.sort((a, b) => b.volume - a.volume),
-  //  timestamp: Date.now(),
-  //};
 
   return Response.json({
     data: data.sort((a,b)=>b.volume - a.volume).slice(skip, skip + limit),
