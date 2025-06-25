@@ -29,7 +29,6 @@ export interface Stock extends SimulationNodeDatum {
   country: string;
   isEtf: boolean;
   isActivelyTrading: boolean;
-  logo?: string;
 }
 
 // screener
@@ -39,20 +38,23 @@ export const getStockData = async (searchParams: {
   limit?: number;
   volumeMoreThan?: number;
 }) => {
-
-	const sp = Object.entries(searchParams)
+  const sp = Object.entries(searchParams)
     .filter(([key, value]) => value !== undefined)
-    .reduce((acc, [key, value]) => {
-      acc[key] = value;
-      return acc;
-    }, {} as Record<string, number>);
-	
-  const data = await FMPClient.get('stock-screener', { searchParams: sp }).json<Stock[]>();
+    .reduce(
+      (acc, [key, value]) => {
+        acc[key] = value;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
+
+  const data = await FMPClient.get('stock-screener', { searchParams: sp }).json<
+    Stock[]
+  >();
 
   return data
-    .map((d) => ({ logo: getLogoUrl({ symbol: d.symbol }), ...d }))
     .filter((i) => i.beta);
 };
 
-const getLogoUrl = ({ symbol }: { symbol: string }) =>
+export const getImageUrl = ({ symbol }: { symbol: string }) =>
   `https://financialmodelingprep.com/image-stock/${symbol}.png?apikey=${FMP_API_KEY}`;
