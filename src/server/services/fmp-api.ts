@@ -52,8 +52,7 @@ export const getStockData = async (searchParams: {
     Stock[]
   >();
 
-  return data
-    .filter((i) => i.beta);
+  return data.filter((i) => i.beta);
 };
 
 export const getImageUrl = ({ symbol }: { symbol: string }) =>

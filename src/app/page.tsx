@@ -2,7 +2,7 @@
 //import { Box } from '~/components/Box';
 import { BuubleChart } from '~/components/bubble-chart';
 import useSWR from 'swr';
-import { Stock } from '~/services/fmp-api';
+import { Stock } from '~/server/services/fmp-api';
 import { AppStore } from '~/store/app';
 import Header from '~/components/header';
 import Footer from '~/components/footer';

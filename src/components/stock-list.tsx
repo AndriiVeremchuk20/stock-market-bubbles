@@ -1,4 +1,4 @@
-import { Stock } from '~/services/fmp-api';
+import { Stock } from '~/server/services/fmp-api';
 
 export const StockList = ({ data }: { data: Stock[] }) => {
   return (

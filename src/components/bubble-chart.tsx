@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { Stock } from '~/services/fmp-api';
+import { Stock } from '~/server/services/fmp-api';
 import * as d3 from 'd3';
 
 export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
