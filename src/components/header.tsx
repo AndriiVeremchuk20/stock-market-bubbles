@@ -1,6 +1,18 @@
 'use client';
 
-import { Info, Settings, SettingsIcon } from 'lucide-react';
+import {
+  AppWindowMac,
+  Coffee,
+  EyeIcon,
+  Github,
+  Info,
+  Linkedin,
+  PersonStanding,
+  Presentation,
+  Settings,
+  SettingsIcon,
+  WatchIcon,
+} from 'lucide-react';
 import { ChangeEvent, useState } from 'react';
 import { AppStore, SortType } from '~/store/app';
 import { Logo } from './logo';
@@ -60,21 +72,23 @@ const Tools = () => {
       <Settings onClick={() => setShowTools((prev) => !prev)} />
       {showInfo && (
         <Modal
-          className='h-3/4 w-4/6'
+          className='h-2/3 w-2/4'
           isOpen={showInfo}
           onClose={() => setShowInfo(false)}
         >
           <ModalHeader className='flex gap-1'>
             <Info /> Information
           </ModalHeader>
-          <ModalBody className='p-y grid h-full w-full grid-cols-1 grid-rows-2 gap-2'>
-            <div className='h-full space-y-2 rounded-md p-2 duration-200 hover:bg-secondary/20'>
-              <h3>How to use</h3>
+          <ModalBody className='p-y flex w-full flex-col'>
+            <div className='space-y-2 border-b p-2'>
+              <h3 className='flex items-center gap-2 text-2xl font-bold'>
+                How to use <Presentation size={45} />{' '}
+              </h3>
               <div>1. Wait for data loading.</div>
               <div>2. Look at the bubles:</div>
               <div className='flex justify-around'>
                 <div>
-                  <div className='flex h-[150px] w-[150px] flex-col items-center justify-center rounded-full border-2 border-green p-4'>
+                  <div className='flex h-[150px] w-[150px] flex-col items-center justify-center rounded-full border-2 border-green bg-primary p-4'>
                     <Image
                       src='https://financialmodelingprep.com/image-stock/GOOG.png?apikey=1qRlxu0Wph1LOkFVhdgg0Grt0lDsvPH6'
                       alt='image'
@@ -87,7 +101,7 @@ const Tools = () => {
                   <div className='text-center'>Good</div>
                 </div>
                 <div>
-                  <div className='flex h-[150px] w-[150px] flex-col items-center justify-center rounded-full border-2 border-red p-4'>
+                  <div className='flex h-[150px] w-[150px] flex-col items-center justify-center rounded-full border-2 border-red bg-primary p-4'>
                     <Image
                       src='https://financialmodelingprep.com/image-stock/GOOG.png?apikey=1qRlxu0Wph1LOkFVhdgg0Grt0lDsvPH6'
                       alt='image'
@@ -102,13 +116,53 @@ const Tools = () => {
               </div>
               <div>3. That&apos;s all</div>
             </div>
-            <div className='h-full rounded-md bg-none p-2 duration-500 hover:bg-secondary/20'>
-              <h3>About us</h3>
-              <div>
-                An interactive app that visualizes and compares company
-                performance using dynamic, bubble-based charts. It&apos;s
-                simplified open-source version of{' '}
-                <Link href='https://bubblescreener.com/'>bubblescreener</Link>
+            <div className='grid grid-cols-2 grid-rows-1'>
+              <div className='h-full p-2'>
+                <h3 className='flex items-center gap-2 text-2xl font-bold'>
+                  About App <AppWindowMac size={45} />
+                </h3>
+                <div>
+                  An interactive app that visualizes and compares company
+                  performance using dynamic, bubble-based charts. It&apos;s
+                  simplified open-source version of{' '}
+                  <Link
+                    href='https://bubblescreener.com/'
+                    className='underline duration-500 hover:text-secondary/80'
+                  >
+                    bubblescreener
+                  </Link>
+                </div>
+              </div>
+              <div className='p-2'>
+                <h3 className='flex items-center text-2xl font-bold'>
+                  About Me <PersonStanding size={45} />
+                </h3>
+                <div>
+                  <span>
+                    I'm a full-stack developer who loves bringing ideas and
+                    visions to life.
+                  </span>
+                  <div className='flex justify-between gap-2 p-2'>
+                    <Link
+                      href='https://github.com/AndriiVeremchuk20'
+                      className='flex items-center gap-1 text-xl underline duration-200 hover:text-secondary/70'
+                    >
+                      Git <Github size={30} />
+                    </Link>
+                    <Link
+                      href='https://www.linkedin.com/in/andrii-veremchuk-2a0940235'
+                      className='flex items-center gap-1 text-xl underline duration-200 hover:text-secondary/70'
+                    >
+                      LinkedIn <Linkedin size={30} />
+                    </Link>
+                    <Link
+                      href='https://buymeacoffee.com/andriiveremchuk'
+                      className='flex items-center gap-1 text-xl underline duration-200 hover:text-secondary/70'
+                    >
+                      Coffee <Coffee size={30} />
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
           </ModalBody>
