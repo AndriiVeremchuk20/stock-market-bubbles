@@ -21,7 +21,7 @@ export default function Header() {
 }
 
 const Filters = () => {
-  const { skip, setSkip, setSort} = AppStore();
+  const { skip, setSkip, setSort } = AppStore();
 
   const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target;
@@ -30,7 +30,7 @@ const Filters = () => {
       return setSort({ sort: value as SortType });
     }
 
-    setSkip({skip: Number(value) });
+    setSkip({ skip: Number(value) });
   };
 
   return (

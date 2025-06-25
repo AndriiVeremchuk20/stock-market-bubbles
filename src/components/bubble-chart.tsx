@@ -5,9 +5,6 @@ import { Stock } from '~/services/fmp-api';
 import * as d3 from 'd3';
 
 export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
-
-
-
   const svgRef = useRef<SVGSVGElement | null>(null);
 
   useEffect(() => {
@@ -26,6 +23,7 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
       .domain([-1, 0, 1])
       .range(['red', 'gray', 'green']);
 
+    /*
     const color = d3
       .scaleLinear<string>()
       .domain([-1, 0, 1])
@@ -34,7 +32,7 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
         'rgba( 169, 169, 169,0.2)',
         'rgba( 153, 246, 166,0.2)',
       ]);
-
+*/
     const fontSize = d3
       .scaleSqrt()
       .domain([-10, d3.max(stockDataList, (d) => d.marketCap)!])

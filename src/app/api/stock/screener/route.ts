@@ -1,7 +1,7 @@
 import { redis } from '~/server/db/redis';
 import { getStockData, Stock } from '~/services/fmp-api';
 
-export const dynamic  = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 const volumeMoreThan = 10_000_000;
 
@@ -22,8 +22,6 @@ const secondsToNextDay = () => {
 export const GET = async (req: Request) => {
   const { searchParams, pathname, search } = new URL(req.url);
 
-  console.log("NOW", pathname + search)
-
   const skip = Number(searchParams.get('skip'));
   const limit = Number(searchParams.get('limit'));
   const betaMoreThan = Number(searchParams.get('betaMoreThan'));
@@ -35,7 +33,6 @@ export const GET = async (req: Request) => {
     // check cached data in redis db
     const cachedData = await redis.get<Stock[]>(keyUrl);
     if (cachedData) {
-	  console.log("Data", cachedData.length)
       return Response.json({ data: cachedData });
     }
   } catch (e) {
@@ -52,18 +49,18 @@ export const GET = async (req: Request) => {
 
   const data = await getStockData({ ...args });
 
-  const orderedData = data.sort((a, b) => b.volume - a.volume).slice(skip, skip+limit);
+  const orderedData = data
+    .sort((a, b) => b.volume - a.volume)
+    .slice(skip, skip + limit);
 
-  console.log("Data", orderedData.length)
-
-  try{
-  await redis
-    .pipeline()
-    .set(keyUrl, orderedData)
-    .expire(keyUrl, secondsToNextDay())
-    .exec();
-  }catch(e){
-	console.log("[REDIS CONNECTION ERROR]");
+  try {
+    await redis
+      .pipeline()
+      .set(keyUrl, orderedData)
+      .expire(keyUrl, secondsToNextDay())
+      .exec();
+  } catch (e) {
+    console.log('[REDIS CONNECTION ERROR]');
   }
 
   return Response.json({
