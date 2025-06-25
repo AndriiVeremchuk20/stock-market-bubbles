@@ -7,13 +7,8 @@ import { AppStore } from '~/store/app';
 import Header from '~/components/header';
 import Footer from '~/components/footer';
 import { Skeleton } from '~/components/skeleton';
-import { useEffect } from 'react';
 
-const fetcher = (url: string) => {
-  console.log('fetch for', url);
-
-  return fetch(url).then((r) => r.json());
-};
+const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
 export default function Home() {
   const { skip, limit, sort } = AppStore((s) => s);
