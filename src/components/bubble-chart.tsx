@@ -136,7 +136,7 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
       .transition()
       .duration(500)
       .ease(d3.easeCubicOut)
-      .attr('href', (d) => d.logo!)
+      .attr('href', (d) => `api/stock/image/${d.symbol}`)
       .attr('x', (d) => -radiusScale(d.marketCap) * 0.4)
       .attr('y', (d) => -radiusScale(d.marketCap) * 0.8)
       .attr('width', (d) => radiusScale(d.marketCap) * 0.8)
