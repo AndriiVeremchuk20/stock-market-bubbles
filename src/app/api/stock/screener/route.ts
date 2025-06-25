@@ -1,5 +1,5 @@
 import { redis } from '~/server/db/redis';
-import { getStockData, Stock } from '~/services/fmp-api';
+import { getStockData, Stock } from '~/server/services/fmp-api';
 
 export const dynamic = 'force-dynamic';
 

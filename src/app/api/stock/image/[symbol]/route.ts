@@ -1,5 +1,5 @@
 import ky from "ky";
-import {getImageUrl} from "~/services/fmp-api";
+import {getImageUrl} from "~/server/services/fmp-api";
 
 export const dynamic = 'force-dynamic';
 
