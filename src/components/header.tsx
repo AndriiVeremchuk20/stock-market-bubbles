@@ -23,19 +23,18 @@ export default function Header() {
 const Filters = () => {
   const { skip } = AppStore();
 
-  const {setState} = AppStore
+  const { setState } = AppStore;
 
   const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    
-	  const {value} = e.target;
+    const { value } = e.target;
 
-	  if(isNaN(Number(value))){
-		  setState({skip: 0, sort: value as SortType});
-		  return;
-	  } 
+    if (isNaN(Number(value))) {
+      setState({ skip: 0, sort: value as SortType });
+      return;
+    }
 
-	  setState({sort: null, skip: (Number(value))});
-	};
+    setState({ sort: null, skip: Number(value) });
+  };
 
   return (
     <select
@@ -48,8 +47,8 @@ const Filters = () => {
       <option value={300}>201-300</option>
       <option value={400}>301-400</option>
       <option value={500}>401-500</option>
-      <option value={"gainers"}>📈 Best Gainers</option>
-      <option value={"losers"}>📉 Best Losers</option>
+      <option value={'gainers'}>📈 Best Gainers</option>
+      <option value={'losers'}>📉 Best Losers</option>
     </select>
   );
 };
@@ -110,8 +109,8 @@ const Tools = () => {
               <h3>About us</h3>
               <div>
                 An interactive app that visualizes and compares company
-                performance using dynamic, bubble-based charts. It&apos;s simplified
-                open-source version of{' '}
+                performance using dynamic, bubble-based charts. It&apos;s
+                simplified open-source version of{' '}
                 <Link href='https://bubblescreener.com/'>bubblescreener</Link>
               </div>
             </div>

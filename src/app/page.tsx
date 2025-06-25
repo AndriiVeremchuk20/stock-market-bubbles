@@ -13,7 +13,7 @@ const fetcher = (url: string) => fetch(url).then((r) => r.json());
 export default function Home() {
   const { skip, limit, sort } = AppStore((s) => s);
   const { data, error, isLoading } = useSWR<{ data: Stock[] }>(
-    `/api/stock/screener?skip=${skip}&limit=${limit}&${sort==="losers"?"betaLowerThan=-1":sort==="gainers"?"betaMoreThan=3":""}`,
+    `/api/stock/screener?skip=${skip}&limit=${limit}&${sort === 'losers' ? 'betaLowerThan=-1' : sort === 'gainers' ? 'betaMoreThan=3' : ''}`,
     fetcher,
     { refreshInterval: 5 * 60 * 1000 }
   );

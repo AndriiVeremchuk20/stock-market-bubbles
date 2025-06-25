@@ -39,15 +39,19 @@ export const getStockData = async (searchParams: {
   limit?: number;
   volumeMoreThan?: number;
 }) => {
-
-	const sp = Object.entries(searchParams)
+  const sp = Object.entries(searchParams)
     .filter(([key, value]) => value !== undefined)
-    .reduce((acc, [key, value]) => {
-      acc[key] = value;
-      return acc;
-    }, {} as Record<string, number>);
-	
-  const data = await FMPClient.get('stock-screener', { searchParams: sp }).json<Stock[]>();
+    .reduce(
+      (acc, [key, value]) => {
+        acc[key] = value;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
+
+  const data = await FMPClient.get('stock-screener', { searchParams: sp }).json<
+    Stock[]
+  >();
 
   return data
     .map((d) => ({ logo: getLogoUrl({ symbol: d.symbol }), ...d }))
