@@ -5,6 +5,9 @@ import { Stock } from '~/services/fmp-api';
 import * as d3 from 'd3';
 
 export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
+
+
+
   const svgRef = useRef<SVGSVGElement | null>(null);
 
   useEffect(() => {

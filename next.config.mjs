@@ -2,7 +2,8 @@
 await import('./src/env.mjs');
 
 const nextConfig = {
-  images: {
+	reactStrictMode: false,
+	images: {
     domains: ['financialmodelingprep.com'],
   },
 };

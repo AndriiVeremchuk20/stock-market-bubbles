@@ -16,6 +16,6 @@ export const AppStore = create<AppStore>((set) => ({
   skip: 0,
   sort: null,
 
-  setSkip: ({ skip }) => set({ skip }),
-  setSort: ({ sort }: { sort: SortType }) => set({ sort }),
+  setSkip: ({ skip }) => set({ skip, sort: null }),
+  setSort: ({ sort }: { sort: SortType }) => set({ sort, skip: 0}),
 }));

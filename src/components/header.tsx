@@ -21,19 +21,16 @@ export default function Header() {
 }
 
 const Filters = () => {
-  const { skip } = AppStore();
-
-  const { setState } = AppStore;
+  const { skip, setSkip, setSort} = AppStore();
 
   const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target;
 
     if (isNaN(Number(value))) {
-      setState({ skip: 0, sort: value as SortType });
-      return;
+      return setSort({ sort: value as SortType });
     }
 
-    setState({ sort: null, skip: Number(value) });
+    setSkip({skip: Number(value) });
   };
 
   return (
@@ -42,11 +39,11 @@ const Filters = () => {
       onChange={handleSelectChange}
       className='border-white rounded-md border bg-primary p-2'
     >
-      <option value={100}>0 - 100</option>
-      <option value={200}>101-200</option>
-      <option value={300}>201-300</option>
-      <option value={400}>301-400</option>
-      <option value={500}>401-500</option>
+      <option value={0}>0 - 100</option>
+      <option value={100}>101-200</option>
+      <option value={200}>201-300</option>
+      <option value={300}>301-400</option>
+      <option value={400}>401-500</option>
       <option value={'gainers'}>📈 Best Gainers</option>
       <option value={'losers'}>📉 Best Losers</option>
     </select>
