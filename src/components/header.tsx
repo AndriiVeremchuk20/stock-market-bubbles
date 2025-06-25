@@ -3,7 +3,6 @@
 import {
   AppWindowMac,
   Coffee,
-  EyeIcon,
   Github,
   Info,
   Linkedin,
@@ -11,7 +10,6 @@ import {
   Presentation,
   Settings,
   SettingsIcon,
-  WatchIcon,
 } from 'lucide-react';
 import { ChangeEvent, useState } from 'react';
 import { AppStore, SortType } from '~/store/app';
@@ -139,7 +137,7 @@ const Tools = () => {
                 </h3>
                 <div>
                   <span>
-                    I'm a full-stack developer who loves bringing ideas and
+                    I&apos;m a full-stack developer who loves bringing ideas and
                     visions to life.
                   </span>
                   <div className='flex justify-between gap-2 p-2'>
