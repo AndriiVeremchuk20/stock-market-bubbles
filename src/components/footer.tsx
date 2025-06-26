@@ -6,10 +6,10 @@ import { Logo } from './logo';
 
 export default function Footer() {
   return (
-    <footer className='flex flex-col sm:flex-row h-fit w-full items-center justify-between border-t border-secondary bg-primary px-5 py-2 pb-8'>
+    <footer className='flex h-fit w-full flex-col items-center justify-between border-t border-secondary bg-primary px-5 py-2 pb-8 sm:flex-row'>
       <div>
         <Logo />
-        <div className='w-full sm:w-3/4  text-sm'>
+        <div className='w-full text-sm sm:w-3/4'>
           An interactive app that visualizes and compares company performance
           using dynamic, bubble-based charts.
         </div>
@@ -26,7 +26,7 @@ const PowerBy = () => {
     <div className='flex items-center gap-2 p-1'>
       <div className='text-md text-nowrap'>Power by:</div>
       <Link
-        className='w-full flex items-center gap-2 rounded-xl bg-secondary/20 p-2'
+        className='flex w-full items-center gap-2 rounded-xl bg-secondary/20 p-2'
         href='https://site.financialmodelingprep.com/'
       >
         <Image

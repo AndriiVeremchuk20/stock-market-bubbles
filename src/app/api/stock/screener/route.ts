@@ -22,22 +22,12 @@ const secondsToNextDay = () => {
 export const GET = async (req: Request) => {
   const { searchParams, pathname, search } = new URL(req.url);
 
-  const skip = Number(searchParams.get('skip'));
-  const limit = Number(searchParams.get('limit'));
+  const skip = Number(searchParams.get('skip') ?? 0);
+  const limit = Number(searchParams.get('limit') ?? 100);
   const betaMoreThan = Number(searchParams.get('betaMoreThan'));
   const betaLowerThan = Number(searchParams.get('betaLowerThan'));
 
   const keyUrl = pathname + search;
-
-  try {
-    // check cached data in redis db
-    const cachedData = await redis.get<Stock[]>(keyUrl);
-    if (cachedData) {
-      return Response.json({ data: cachedData });
-    }
-  } catch (e) {
-    console.error('[REDIS CONNECTION ERROR]');
-  }
 
   let args: any = { limit: 600, volumeMoreThan };
 
@@ -47,23 +37,40 @@ export const GET = async (req: Request) => {
     args = { ...args, betaLowerThan };
   }
 
-  const data = await getStockData({ ...args });
-
-  const orderedData = data
-    .sort((a, b) => b.volume - a.volume)
-    .slice(skip, skip + limit);
-
   try {
-    await redis
-      .pipeline()
-      .set(keyUrl, orderedData)
-      .expire(keyUrl, secondsToNextDay())
-      .exec();
+    // check cached data in redis db
+    const cached = await redis.get<Stock[]>(keyUrl);
+    if (cached) {
+      return Response.json({ status: 200, message: 'ok', data: cached });
+    }
   } catch (e) {
-    console.log('[REDIS CONNECTION ERROR]');
+    console.error('[REDIS CONNECTION ERROR]');
   }
 
-  return Response.json({
-    data: orderedData,
-  });
+  try {
+    const data = await getStockData({ ...args });
+
+    const orderedData = data
+      .sort((a, b) => b.volume - a.volume)
+      .slice(skip, skip + limit);
+
+    try {
+      await redis
+        .pipeline()
+        .set(keyUrl, orderedData)
+        .expire(keyUrl, secondsToNextDay())
+        .exec();
+    } catch (e) {
+      console.log('[REDIS CONNECTION ERROR]');
+    }
+
+    return Response.json({
+      status: 200,
+      message: 'ok',
+      data: orderedData,
+    });
+  } catch (e) {
+    console.error('Server ERROR', e);
+    return Response.json({ status: 500, message: 'Internal Server Error' });
+  }
 };
