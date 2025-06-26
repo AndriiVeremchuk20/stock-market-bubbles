@@ -21,9 +21,9 @@ import Link from 'next/link';
 
 export default function Header() {
   return (
-    <header className='flex h-[50px] w-full justify-between border-b border-secondary bg-primary px-5'>
+    <header className='flex h-[60px] w-full justify-between border-b border-secondary bg-primary sm:px-5 px-3'>
       <Logo />
-      <div className='flex items-center gap-10'>
+      <div className='flex items-center gap-4'>
         <Filters />
         <Tools />
       </div>
@@ -48,7 +48,7 @@ const Filters = () => {
     <select
       defaultValue={skip}
       onChange={handleSelectChange}
-      className='border-white rounded-md border bg-primary p-2'
+      className='sm:w-full w-[100px] border-white rounded-md border bg-primary  sm:p-2 p-1' 
     >
       <option value={0}>0 - 100</option>
       <option value={100}>101-200</option>
@@ -66,7 +66,7 @@ const Tools = () => {
   const [showTools, setShowTools] = useState<boolean>(false);
 
   return (
-    <div className='flex items-center gap-10'>
+    <div className='flex items-center gap-3 sm:gap-10'>
       <Info onClick={() => setShowInfo((prev) => !prev)} />
       <Settings onClick={() => setShowTools((prev) => !prev)} />
       {showInfo && (
