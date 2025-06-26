@@ -6,6 +6,7 @@ import {
   Github,
   Info,
   Linkedin,
+  Mail,
   PersonStanding,
   Presentation,
   Settings,
@@ -88,7 +89,7 @@ const Tools = () => {
                 <div>
                   <div className='flex h-[150px] w-[150px] flex-col items-center justify-center rounded-full border-2 border-green bg-primary p-4'>
                     <Image
-                      src='https://financialmodelingprep.com/image-stock/GOOG.png?apikey=1qRlxu0Wph1LOkFVhdgg0Grt0lDsvPH6'
+                      src='/api/stock/image/GOOGL'
                       alt='image'
                       width={70}
                       height={70}
@@ -101,7 +102,7 @@ const Tools = () => {
                 <div>
                   <div className='flex h-[150px] w-[150px] flex-col items-center justify-center rounded-full border-2 border-red bg-primary p-4'>
                     <Image
-                      src='https://financialmodelingprep.com/image-stock/GOOG.png?apikey=1qRlxu0Wph1LOkFVhdgg0Grt0lDsvPH6'
+                      src='/api/stock/image/GOOGL'
                       alt='image'
                       width={70}
                       height={70}
@@ -154,6 +155,13 @@ const Tools = () => {
                       LinkedIn <Linkedin size={30} />
                     </Link>
                     <Link
+                      href='mailto:andriiveremchuk313@gmail.com'
+                      className='flex items-center gap-1 text-xl underline duration-200 hover:text-secondary/70'
+                    >
+                      Email <Mail size = {30}/>
+                    </Link>
+
+					<Link
                       href='https://buymeacoffee.com/andriiveremchuk'
                       className='flex items-center gap-1 text-xl underline duration-200 hover:text-secondary/70'
                     >

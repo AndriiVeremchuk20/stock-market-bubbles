@@ -7,36 +7,29 @@ import * as d3 from 'd3';
 export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
   const svgRef = useRef<SVGSVGElement | null>(null);
 
-  useEffect(() => {
-    const width = window.innerWidth - 50;
-    const height = window.innerHeight - 50;
+    const width = window.innerWidth -10;
+    const height = window.innerHeight - 20;
 
-    //const screenCof = height / width;
+	const isMoble = width < 768;
+
+  useEffect(() => {
 
     const svg = d3
       .select(svgRef.current)
       .attr('width', width)
       .attr('height', height);
 
+	  svg.selectAll("*").remove();
+
     const scaleColor = d3
       .scaleLinear<string>()
       .domain([-1, 0, 1])
       .range(['red', 'gray', 'green']);
 
-    /*
-    const color = d3
-      .scaleLinear<string>()
-      .domain([-1, 0, 1])
-      .range([
-        'rgba( 246, 126, 121,0.2)',
-        'rgba( 169, 169, 169,0.2)',
-        'rgba( 153, 246, 166,0.2)',
-      ]);
-*/
     const fontSize = d3
       .scaleSqrt()
       .domain([-10, d3.max(stockDataList, (d) => d.marketCap)!])
-      .range([10, 25]);
+      .range(isMoble? [10, 15]: [10, 25]);
 
     const radiusScale = d3
       .scaleSqrt()
@@ -44,7 +37,7 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
         d3.min(stockDataList, (d) => d.marketCap)!,
         d3.max(stockDataList, (d) => d.marketCap)!,
       ])
-      .range([30, 150]);
+      .range(isMoble?[20, 60]:[30, 150]);
 
     const simulation = d3
       .forceSimulation(stockDataList)
@@ -158,7 +151,7 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
       .attr('text-anchor', 'middle')
       .attr('y', (d) => radiusScale(d.marketCap) * 0.6)
       .attr('fill', 'white')
-      .attr('font-size', '10px')
+      .attr('font-size', d=>`${fontSize(d.marketCap) - 4}px`)
       .attr('font-weight', 'bold')
       .text((d) => `${d.beta > 0 ? '+' : ''}${d.beta.toFixed(2)}%`);
 
@@ -197,7 +190,7 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
 
   return (
     <div className='flex h-full w-full items-center justify-center'>
-      <svg ref={svgRef} className='bg-primary/90 p-1' />
+      <svg ref={svgRef} className='bg-primary/90' />
     </div>
   );
 };
