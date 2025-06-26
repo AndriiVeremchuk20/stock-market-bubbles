@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <main className='w-full bg-primary text-secondary'>
       <Header />
-      <div className='h-screen w-full'>
+      <div className='h-screen w-screen'>
         {isLoading ? (
           <Skeleton />
         ) : (

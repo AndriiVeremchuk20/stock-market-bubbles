@@ -6,6 +6,7 @@ import {
   Github,
   Info,
   Linkedin,
+  Mail,
   PersonStanding,
   Presentation,
   Settings,
@@ -20,9 +21,9 @@ import Link from 'next/link';
 
 export default function Header() {
   return (
-    <header className='flex h-[50px] w-full justify-between border-b border-secondary bg-primary px-5'>
+    <header className='flex h-[60px] w-full justify-between border-b border-secondary bg-primary sm:px-5 px-3'>
       <Logo />
-      <div className='flex items-center gap-10'>
+      <div className='flex items-center gap-4'>
         <Filters />
         <Tools />
       </div>
@@ -47,15 +48,15 @@ const Filters = () => {
     <select
       defaultValue={skip}
       onChange={handleSelectChange}
-      className='border-white rounded-md border bg-primary p-2'
+      className='sm:w-full w-[100px] text-xs sm:text-xl border-white rounded-md border bg-primary  sm:p-2 p-1' 
     >
       <option value={0}>0 - 100</option>
       <option value={100}>101-200</option>
       <option value={200}>201-300</option>
       <option value={300}>301-400</option>
       <option value={400}>401-500</option>
-      <option value={'gainers'}>📈 Best Gainers</option>
-      <option value={'losers'}>📉 Best Losers</option>
+      <option value={'gainers'}>📈 Top Gainers</option>
+      <option value={'losers'}>📉 Top Losers</option>
     </select>
   );
 };
@@ -65,12 +66,12 @@ const Tools = () => {
   const [showTools, setShowTools] = useState<boolean>(false);
 
   return (
-    <div className='flex items-center gap-10'>
+    <div className='flex items-center gap-3 sm:gap-10'>
       <Info onClick={() => setShowInfo((prev) => !prev)} />
       <Settings onClick={() => setShowTools((prev) => !prev)} />
       {showInfo && (
         <Modal
-          className='h-2/3 w-2/4'
+          className='h-full sm:h-2/3 w-full sm:w-2/4'
           isOpen={showInfo}
           onClose={() => setShowInfo(false)}
         >
@@ -79,7 +80,7 @@ const Tools = () => {
           </ModalHeader>
           <ModalBody className='p-y flex w-full flex-col'>
             <div className='space-y-2 border-b p-2'>
-              <h3 className='flex items-center gap-2 text-2xl font-bold'>
+              <h3 className='flex items-center gap-2 text-xl sm:text-2xl font-bold'>
                 How to use <Presentation size={45} />{' '}
               </h3>
               <div>1. Wait for data loading.</div>
@@ -88,7 +89,7 @@ const Tools = () => {
                 <div>
                   <div className='flex h-[150px] w-[150px] flex-col items-center justify-center rounded-full border-2 border-green bg-primary p-4'>
                     <Image
-                      src='https://financialmodelingprep.com/image-stock/GOOG.png?apikey=1qRlxu0Wph1LOkFVhdgg0Grt0lDsvPH6'
+                      src='/api/stock/image/GOOGL'
                       alt='image'
                       width={70}
                       height={70}
@@ -101,7 +102,7 @@ const Tools = () => {
                 <div>
                   <div className='flex h-[150px] w-[150px] flex-col items-center justify-center rounded-full border-2 border-red bg-primary p-4'>
                     <Image
-                      src='https://financialmodelingprep.com/image-stock/GOOG.png?apikey=1qRlxu0Wph1LOkFVhdgg0Grt0lDsvPH6'
+                      src='/api/stock/image/GOOGL'
                       alt='image'
                       width={70}
                       height={70}
@@ -112,11 +113,11 @@ const Tools = () => {
                   <div className='text-center'>Bad</div>
                 </div>
               </div>
-              <div>3. That&apos;s all</div>
+              <div>3. That&apos;s all :)</div>
             </div>
             <div className='grid grid-cols-2 grid-rows-1'>
               <div className='h-full p-2'>
-                <h3 className='flex items-center gap-2 text-2xl font-bold'>
+                <h3 className='flex items-center gap-2 text-xl sm:text-2xl font-bold'>
                   About App <AppWindowMac size={45} />
                 </h3>
                 <div>
@@ -132,7 +133,7 @@ const Tools = () => {
                 </div>
               </div>
               <div className='p-2'>
-                <h3 className='flex items-center text-2xl font-bold'>
+                <h3 className='flex items-center text-xl sm:text-2xl font-bold'>
                   About Me <PersonStanding size={45} />
                 </h3>
                 <div>
@@ -140,7 +141,7 @@ const Tools = () => {
                     I&apos;m a full-stack developer who loves bringing ideas and
                     visions to life.
                   </span>
-                  <div className='flex justify-between gap-2 p-2'>
+                  <div className='pt-4 flex flex-col sm:flex-row justify-between gap-2 p-2'>
                     <Link
                       href='https://github.com/AndriiVeremchuk20'
                       className='flex items-center gap-1 text-xl underline duration-200 hover:text-secondary/70'
@@ -154,6 +155,13 @@ const Tools = () => {
                       LinkedIn <Linkedin size={30} />
                     </Link>
                     <Link
+                      href='mailto:andriiveremchuk313@gmail.com'
+                      className='flex items-center gap-1 text-xl underline duration-200 hover:text-secondary/70'
+                    >
+                      Email <Mail size = {30}/>
+                    </Link>
+
+					<Link
                       href='https://buymeacoffee.com/andriiveremchuk'
                       className='flex items-center gap-1 text-xl underline duration-200 hover:text-secondary/70'
                     >
