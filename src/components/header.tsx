@@ -48,15 +48,15 @@ const Filters = () => {
     <select
       defaultValue={skip}
       onChange={handleSelectChange}
-      className='sm:w-full w-[100px] border-white rounded-md border bg-primary  sm:p-2 p-1' 
+      className='sm:w-full w-[100px] text-xs sm:text-md border-white rounded-md border bg-primary  sm:p-2 p-1' 
     >
       <option value={0}>0 - 100</option>
       <option value={100}>101-200</option>
       <option value={200}>201-300</option>
       <option value={300}>301-400</option>
       <option value={400}>401-500</option>
-      <option value={'gainers'}>📈 Best Gainers</option>
-      <option value={'losers'}>📉 Best Losers</option>
+      <option value={'gainers'}>📈 Top Gainers</option>
+      <option value={'losers'}>📉 Top Losers</option>
     </select>
   );
 };

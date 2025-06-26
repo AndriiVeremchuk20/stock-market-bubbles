@@ -7,7 +7,7 @@ import { Logo } from './logo';
 export default function Footer() {
   return (
     <footer className='flex flex-col sm:flex-row h-fit w-full items-center justify-between border-t border-secondary bg-primary px-5 py-2 pb-8'>
-      <div className=''>
+      <div>
         <Logo />
         <div className='w-full sm:w-3/4  text-sm'>
           An interactive app that visualizes and compares company performance
