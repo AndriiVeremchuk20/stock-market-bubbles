@@ -21,7 +21,7 @@ import Link from 'next/link';
 
 export default function Header() {
   return (
-    <header className='flex h-[60px] w-full justify-between border-b border-secondary bg-primary sm:px-5 px-3'>
+    <header className='flex h-[60px] w-full justify-between border-b border-secondary bg-primary px-3 sm:px-5'>
       <Logo />
       <div className='flex items-center gap-4'>
         <Filters />
@@ -48,7 +48,7 @@ const Filters = () => {
     <select
       defaultValue={skip}
       onChange={handleSelectChange}
-      className='sm:w-full w-[100px] text-xs sm:text-xl border-white rounded-md border bg-primary  sm:p-2 p-1' 
+      className='border-white w-[100px] rounded-md border bg-primary p-1 text-xs sm:w-full sm:p-2 sm:text-xl'
     >
       <option value={0}>0 - 100</option>
       <option value={100}>101-200</option>
@@ -71,7 +71,7 @@ const Tools = () => {
       <Settings onClick={() => setShowTools((prev) => !prev)} />
       {showInfo && (
         <Modal
-          className='h-full sm:h-2/3 w-full sm:w-2/4'
+          className='h-full w-full sm:h-2/3 sm:w-2/4'
           isOpen={showInfo}
           onClose={() => setShowInfo(false)}
         >
@@ -80,7 +80,7 @@ const Tools = () => {
           </ModalHeader>
           <ModalBody className='p-y flex w-full flex-col'>
             <div className='space-y-2 border-b p-2'>
-              <h3 className='flex items-center gap-2 text-xl sm:text-2xl font-bold'>
+              <h3 className='flex items-center gap-2 text-xl font-bold sm:text-2xl'>
                 How to use <Presentation size={45} />{' '}
               </h3>
               <div>1. Wait for data loading.</div>
@@ -117,7 +117,7 @@ const Tools = () => {
             </div>
             <div className='grid grid-cols-2 grid-rows-1'>
               <div className='h-full p-2'>
-                <h3 className='flex items-center gap-2 text-xl sm:text-2xl font-bold'>
+                <h3 className='flex items-center gap-2 text-xl font-bold sm:text-2xl'>
                   About App <AppWindowMac size={45} />
                 </h3>
                 <div>
@@ -133,7 +133,7 @@ const Tools = () => {
                 </div>
               </div>
               <div className='p-2'>
-                <h3 className='flex items-center text-xl sm:text-2xl font-bold'>
+                <h3 className='flex items-center text-xl font-bold sm:text-2xl'>
                   About Me <PersonStanding size={45} />
                 </h3>
                 <div>
@@ -141,7 +141,7 @@ const Tools = () => {
                     I&apos;m a full-stack developer who loves bringing ideas and
                     visions to life.
                   </span>
-                  <div className='pt-4 flex flex-col sm:flex-row justify-between gap-2 p-2'>
+                  <div className='flex flex-col justify-between gap-2 p-2 pt-4 sm:flex-row'>
                     <Link
                       href='https://github.com/AndriiVeremchuk20'
                       className='flex items-center gap-1 text-xl underline duration-200 hover:text-secondary/70'
@@ -158,10 +158,10 @@ const Tools = () => {
                       href='mailto:andriiveremchuk313@gmail.com'
                       className='flex items-center gap-1 text-xl underline duration-200 hover:text-secondary/70'
                     >
-                      Email <Mail size = {30}/>
+                      Email <Mail size={30} />
                     </Link>
 
-					<Link
+                    <Link
                       href='https://buymeacoffee.com/andriiveremchuk'
                       className='flex items-center gap-1 text-xl underline duration-200 hover:text-secondary/70'
                     >

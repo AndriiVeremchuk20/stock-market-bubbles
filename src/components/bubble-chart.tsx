@@ -7,19 +7,18 @@ import * as d3 from 'd3';
 export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
   const svgRef = useRef<SVGSVGElement | null>(null);
 
-    const width = window.innerWidth - 20;
-    const height = window.innerHeight - 20;
+  const width = window.innerWidth - 20;
+  const height = window.innerHeight - 20;
 
-	const isMoble = width < 768;
+  const isMoble = width < 768;
 
   useEffect(() => {
-
     const svg = d3
       .select(svgRef.current)
       .attr('width', width)
       .attr('height', height);
 
-	  svg.selectAll("*").remove();
+    svg.selectAll('*').remove();
 
     const scaleColor = d3
       .scaleLinear<string>()
@@ -29,7 +28,7 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
     const fontSize = d3
       .scaleSqrt()
       .domain([-10, d3.max(stockDataList, (d) => d.marketCap)!])
-      .range(isMoble? [10, 15]: [10, 25]);
+      .range(isMoble ? [10, 15] : [10, 25]);
 
     const radiusScale = d3
       .scaleSqrt()
@@ -37,7 +36,7 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
         d3.min(stockDataList, (d) => d.marketCap)!,
         d3.max(stockDataList, (d) => d.marketCap)!,
       ])
-      .range(isMoble?[20, 60]:[40, 150]);
+      .range(isMoble ? [20, 60] : [40, 150]);
 
     const simulation = d3
       .forceSimulation(stockDataList)
@@ -125,7 +124,9 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
 */
     node
       .append('image')
-      .attr('display', (d) => (radiusScale(d.marketCap) < (isMoble?12:32) ? 'none' : null))
+      .attr('display', (d) =>
+        radiusScale(d.marketCap) < (isMoble ? 12 : 32) ? 'none' : null
+      )
       .transition()
       .duration(500)
       .ease(d3.easeCubicOut)
@@ -151,7 +152,7 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
       .attr('text-anchor', 'middle')
       .attr('y', (d) => radiusScale(d.marketCap) * 0.6)
       .attr('fill', 'white')
-      .attr('font-size', d=>`${fontSize(d.marketCap) - 4}px`)
+      .attr('font-size', (d) => `${fontSize(d.marketCap) - 4}px`)
       .attr('font-weight', 'bold')
       .text((d) => `${d.beta > 0 ? '+' : ''}${d.beta.toFixed(2)}%`);
 
