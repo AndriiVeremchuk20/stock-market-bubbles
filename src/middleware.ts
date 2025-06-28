@@ -21,8 +21,6 @@ export async function middleware(req: NextRequest) {
       }
     } catch (e) {
       console.error('[REDIS CONNECTION ERROR]');
-    } finally {
-      return NextResponse.next();
     }
   }
 
