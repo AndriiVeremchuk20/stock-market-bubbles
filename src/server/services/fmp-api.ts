@@ -48,9 +48,9 @@ export const getStockData = async (searchParams: {
       {} as Record<string, number>
     );
 
-  const data = await FMPClient.get('stock-screener', { searchParams: sp }).json<
-    Stock[]
-  >();
+  const data = await FMPClient.get('stock-screener', {
+    searchParams: { ...sp, isActivelyTrading: true },
+  }).json<Stock[]>();
 
   return data.filter((i) => i.beta);
 };

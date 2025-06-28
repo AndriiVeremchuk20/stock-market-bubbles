@@ -1,5 +1,5 @@
 import { redis } from '~/server/db/redis';
-import { getStockData, Stock } from '~/server/services/fmp-api';
+import { getStockData } from '~/server/services/fmp-api';
 
 export const dynamic = 'force-dynamic';
 
@@ -35,16 +35,6 @@ export const GET = async (req: Request) => {
     args = { ...args, betaMoreThan };
   } else if (betaLowerThan) {
     args = { ...args, betaLowerThan };
-  }
-
-  try {
-    // check cached data in redis db
-    const cached = await redis.get<Stock[]>(keyUrl);
-    if (cached) {
-      return Response.json({ status: 200, message: 'ok', data: cached });
-    }
-  } catch (e) {
-    console.error('[REDIS CONNECTION ERROR]');
   }
 
   try {
