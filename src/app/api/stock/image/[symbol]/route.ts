@@ -8,15 +8,26 @@ export const GET = async (
   { params }: { params: { symbol: string } }
 ) => {
   const { symbol } = params;
-
   const fmpImageURL = getImageUrl({ symbol });
 
-  const imageBuffer = await ky(fmpImageURL).arrayBuffer();
+  try {
+    await ky.head(fmpImageURL);
 
-  return new Response(imageBuffer, {
-    status: 200,
-    headers: {
-      'Content-Type': 'image/png',
-    },
-  });
+    const imageBuffer = await ky(fmpImageURL).arrayBuffer();
+
+    return new Response(imageBuffer, {
+      status: 200,
+      headers: {
+        'Content-Type': 'image/png',
+      },
+    });
+  } catch (error: any) {
+    // Image does not exist or some other network error
+    return new Response(JSON.stringify({ error: 'Image not found' }), {
+      status: 404,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
 };
