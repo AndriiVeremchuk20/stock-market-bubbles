@@ -17,7 +17,7 @@ export default function StockChartWrapper() {
   if (sort === 'losers') queryParams.append('betaLowerThan', '-1');
   if (sort === 'gainers') queryParams.append('betaMoreThan', '3');
 
-  const { data, error, isLoading } = useSWR<{ data: Stock[] }>(
+  const { data, isLoading } = useSWR<{ data: Stock[] }>(
     `/api/stock/screener?${queryParams.toString()}`,
     fetcher,
     {
