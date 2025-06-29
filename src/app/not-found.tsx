@@ -1,13 +1,12 @@
-
-export default function NotFoundPage(){
-
-	return <main className="h-screen bg-primary flex justify-center items-center">
-	<div className="flex flex-col border border-secondary text-secondary p-4 rounded-md">
-	<h2 className="text-4xl border-b text-center font-bold">404</h2>
-<span className="text-secondary pt-2">
-
-	This page could not be found.
-</span>
-	</div>	
-	</main>
+export default function NotFoundPage() {
+  return (
+    <main className='flex h-screen items-center justify-center bg-primary'>
+      <div className='flex flex-col rounded-md border border-secondary p-4 text-secondary'>
+        <h2 className='border-b text-center text-4xl font-bold'>404</h2>
+        <span className='pt-2 text-secondary'>
+          This page could not be found.
+        </span>
+      </div>
+    </main>
+  );
 }
