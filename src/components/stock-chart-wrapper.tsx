@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import {AppStore} from '~/store/app';
+import { AppStore } from '~/store/app';
 import useSWR from 'swr';
-import {Stock} from '~/server/services/fmp-api';
-import {BuubleChart} from './bubble-chart';
-import {Skeleton} from './skeleton';
+import { Stock } from '~/server/services/fmp-api';
+import { BuubleChart } from './bubble-chart';
+import { Skeleton } from './skeleton';
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
@@ -24,15 +24,15 @@ export default function StockChartWrapper() {
   );
 
   return (
-      <div className='h-screen w-screen'>
-        {isLoading ? (
-          <Skeleton />
-        ) : (
-          <BuubleChart
-            stockDataList={data!.data}
-            key={`key:${skip}${limit}${sort}`}
-          />
-        )}
-      </div>
+    <div className='h-screen w-screen'>
+      {isLoading ? (
+        <Skeleton />
+      ) : (
+        <BuubleChart
+          stockDataList={data!.data}
+          key={`key:${skip}${limit}${sort}`}
+        />
+      )}
+    </div>
   );
 }
