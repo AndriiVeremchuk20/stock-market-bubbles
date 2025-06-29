@@ -20,7 +20,13 @@ export default function StockChartWrapper() {
   const { data, error, isLoading } = useSWR<{ data: Stock[] }>(
     `/api/stock/screener?${queryParams.toString()}`,
     fetcher,
-    { refreshInterval: 60 * 3600 }
+    {
+      refreshInterval: 60 * 3600,
+      onError(e) {
+        console.log(e);
+        alert('Something happened. Try reloading the page later.');
+      },
+    }
   );
 
   return (

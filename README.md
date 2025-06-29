@@ -6,4 +6,5 @@
 4. -> create settins (bubble size by vield, display market cap or price or volume, theme)
 5. -> also display data in table (tanstack table)
 6. -> [DONE] check image before getting to client
-7. -> create 404 page
+7. -> [DONE] create 404 page
+8. -> bouncing bubdles
