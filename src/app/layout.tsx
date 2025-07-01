@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: 'STOCK BUBBLES',
   description:
     'An interactive app that visualizes and compares company performance using dynamic, bubble-based charts.',
-  icons: { icon: '/icon.svg' },
+  icons: { icon: '/icon.png' },
 };
 
 export default function RootLayout({
