@@ -32,7 +32,7 @@ export const Modal = ({ isOpen, onClose, ...rest }: ModalProps) => {
             }}
             key='box'
             className={twMerge(
-              'h-screen w-full rounded-xl bg-primary p-4 text-secondary shadow-md shadow-secondary/50',
+              'h-screen w-full rounded-xl border-2 bg-primary p-4 text-secondary',
               rest.className
             )}
           >

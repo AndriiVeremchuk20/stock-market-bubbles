@@ -10,3 +10,4 @@
 8. -> bouncing bubdles
 9. -> host website
 10. -> write pretty Readme
+11. -> delete shadow on modal

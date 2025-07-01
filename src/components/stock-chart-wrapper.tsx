@@ -5,6 +5,7 @@ import useSWR from 'swr';
 import { Stock } from '~/server/services/fmp-api';
 import { BuubleChart } from './bubble-chart';
 import { Skeleton } from './skeleton';
+import { StockTable } from './stock-table';
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
@@ -15,7 +16,7 @@ export default function StockChartWrapper() {
   if (typeof skip === 'number') queryParams.append('skip', skip.toString());
   if (typeof limit === 'number') queryParams.append('limit', limit.toString());
   if (sort === 'losers') queryParams.append('betaLowerThan', '-1');
-  if (sort === 'gainers') queryParams.append('betaMoreThan', '3');
+  if (sort === 'gainers') queryParams.append('betaMoreThan', '5');
 
   const { data, isLoading } = useSWR<{ data: Stock[] }>(
     `/api/stock/screener?${queryParams.toString()}`,
@@ -30,14 +31,19 @@ export default function StockChartWrapper() {
   );
 
   return (
-    <div className='h-screen w-screen'>
+    <div className='h-full min-h-screen w-screen'>
       {isLoading ? (
         <Skeleton />
       ) : (
-        <BuubleChart
-          stockDataList={data!.data}
-          key={`key:${skip}${limit}${sort}`}
-        />
+        <>
+          <BuubleChart
+            stockDataList={data!.data}
+            key={`key:${skip}${limit}${sort}`}
+          />
+          <div className='hidden md:block'>
+            <StockTable data={data!.data} />
+          </div>
+        </>
       )}
     </div>
   );
