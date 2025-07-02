@@ -31,7 +31,7 @@ export default function StockChartWrapper() {
   );
 
   return (
-    <div className='h-full min-h-screen w-screen'>
+    <div className='max-h-full min-h-screen w-screen'>
       {isLoading ? (
         <Skeleton />
       ) : (

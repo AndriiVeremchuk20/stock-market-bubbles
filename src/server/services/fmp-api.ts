@@ -39,7 +39,7 @@ export const getStockData = async (searchParams: {
   volumeMoreThan?: number;
 }) => {
   const sp = Object.entries(searchParams)
-    .filter(([key, value]) => value !== undefined)
+    .filter(([_, value]) => value !== undefined)
     .reduce(
       (acc, [key, value]) => {
         acc[key] = value;
