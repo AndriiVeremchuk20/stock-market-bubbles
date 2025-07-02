@@ -4,6 +4,7 @@ import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getSortedRowModel,
   SortingState,
   useReactTable,
@@ -63,20 +64,31 @@ const columns = [
 
 export const StockTable = ({ data }: { data: Stock[] }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [globalFilter, setGlobalFilter] = useState<string>('');
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     onSortingChange: setSorting,
     state: {
       sorting,
+      globalFilter,
     },
   });
 
   return (
     <div className='w-full p-4'>
+      <div className='flex w-full items-center justify-center p-4'>
+        <input
+          value={globalFilter ?? ''}
+          onChange={(e) => setGlobalFilter(e.target.value)}
+          className='w-1/4 rounded-full border-2 bg-secondary/10 p-2 px-4 text-xl outline-none'
+          placeholder='Search'
+        />
+      </div>
       <table className='w-full'>
         <thead className='rounded-md bg-secondary/10'>
           {table.getHeaderGroups().map((headerGroup) => (
