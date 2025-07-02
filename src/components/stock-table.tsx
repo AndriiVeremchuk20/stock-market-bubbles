@@ -13,6 +13,7 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { Stock } from '~/server/services/fmp-api';
+import { formatMarketCap, formatPrice } from '~/server/services/formatters';
 
 const ch = createColumnHelper<Stock>();
 
@@ -37,15 +38,15 @@ const columns = [
 
   ch.accessor('price', {
     header: 'Price',
-    cell: (info) => info.getValue(),
+    cell: (info) => formatPrice(info.getValue()),
   }),
   ch.accessor('marketCap', {
     header: 'Market Cap',
-    cell: (info) => info.getValue(),
+    cell: (info) => formatMarketCap(info.getValue()),
   }),
   ch.accessor('volume', {
     header: 'Volume',
-    cell: (info) => info.getValue() / 100,
+    cell: (info) => formatMarketCap(info.getValue()),
   }),
   ch.accessor('beta', {
     header: 'Beta',
@@ -81,7 +82,7 @@ export const StockTable = ({ data }: { data: Stock[] }) => {
 
   return (
     <div className='w-full p-4'>
-      <div className='flex w-full items-center justify-center p-4'>
+      <div className='flex w-full items-center justify-center p-2'>
         <input
           value={globalFilter ?? ''}
           onChange={(e) => setGlobalFilter(e.target.value)}
