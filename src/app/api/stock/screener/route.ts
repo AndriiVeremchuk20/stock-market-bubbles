@@ -3,7 +3,7 @@ import { getStockData } from '~/server/services/fmp-api';
 
 export const dynamic = 'force-dynamic';
 
-const volumeMoreThan = 1_000_000;
+const volumeMoreThan = 10_000_000;
 
 const secondsToNextDay = () => {
   const now = new Date();
