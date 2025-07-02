@@ -85,7 +85,7 @@ export const StockTable = ({ data }: { data: Stock[] }) => {
                 <th
                   key={header.id}
                   colSpan={header.colSpan}
-                  className='select-none text-left'
+                  className='select-none p-3 text-left'
                 >
                   {header.isPlaceholder ? null : (
                     <div
@@ -125,7 +125,7 @@ export const StockTable = ({ data }: { data: Stock[] }) => {
               className='text-xl duration-200 hover:bg-secondary/30'
             >
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className={`py-3`}>
+                <td key={cell.id} className={`p-3`}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
