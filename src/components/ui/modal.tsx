@@ -1,15 +1,15 @@
 import { AnimatePresence } from 'framer-motion';
-import { HTMLAttributes } from 'react';
+import { ComponentPropsWithRef, HTMLAttributes } from 'react';
 import { motion, MotionProps } from 'framer-motion';
 import { twMerge } from 'tailwind-merge';
 
 type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
-} & HTMLAttributes<HTMLDivElement> &
+} & ComponentPropsWithRef<'div'> &
   MotionProps;
 
-export const Modal = ({ isOpen, onClose, ...rest }: ModalProps) => {
+export const Modal = ({ isOpen, onClose, ref, ...rest }: ModalProps) => {
   return (
     <AnimatePresence>
       {isOpen ? (
@@ -47,7 +47,7 @@ export const Modal = ({ isOpen, onClose, ...rest }: ModalProps) => {
 export const ModalHeader = ({
   className,
   ...props
-}: HTMLAttributes<HTMLDivElement>) => {
+}: ComponentPropsWithRef<'div'>) => {
   return (
     <div
       {...props}

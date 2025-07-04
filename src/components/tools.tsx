@@ -10,14 +10,48 @@ import {
   Settings,
   SettingsIcon,
 } from 'lucide-react';
-import { useState } from 'react';
-import { Modal, ModalBody, ModalHeader } from './modal';
+import { useRef, useState } from 'react';
+import { Modal, ModalBody, ModalHeader } from './ui/modal';
 import Image from 'next/image';
 import Link from 'next/link';
+import { RadioBox } from './ui/radio-box';
+import {
+  BubbleColorScheme,
+  BubbleContent,
+  BubbleSize,
+  usePreferencesStore,
+} from '~/store/preferences';
+import { useOnClickOutside } from 'usehooks-ts';
+
+const bubbleContentOptions: BubbleContent[] = [
+  'beta',
+  'price',
+  'marketCap',
+  'volume',
+];
+const bubbleSizeOptions: BubbleSize[] = ['beta', 'marketCap', 'volume'];
+const colorSchemeOptions: BubbleColorScheme[] = ['r-g', 'b-y', 'neutral'];
 
 export const Tools = () => {
   const [showInfo, setShowInfo] = useState<boolean>(false);
   const [showTools, setShowTools] = useState<boolean>(false);
+
+  const {
+    bubbleSize,
+    bubbleContent,
+    bubbleColorScheme,
+    setBubbleSize,
+    setBubbleContent,
+    setBubbleColorScheme,
+  } = usePreferencesStore();
+
+  const toolsRef = useRef(null);
+
+  const infoRef = useRef(null);
+
+  useOnClickOutside(toolsRef, () => {
+    setShowTools(false);
+  });
 
   return (
     <div className='flex items-center gap-3 sm:gap-10'>
@@ -129,15 +163,56 @@ export const Tools = () => {
         </Modal>
       )}
       {showTools && (
-        <Modal
-          className='h-3/4 w-3/4'
-          isOpen={showTools}
-          onClose={() => setShowTools(false)}
-        >
+        <Modal className='h-3/4 w-3/4' isOpen={showTools} onClose={() => {}}>
           <ModalHeader className='flex gap-1'>
             <SettingsIcon /> Settings
           </ModalHeader>
-          <ModalBody>In progress</ModalBody>
+          <ModalBody className='flex flex-col gap-4'>
+            <form className='flex items-center gap-2'>
+              <span>Bubble Content:</span>
+              {bubbleContentOptions.map((option) => (
+                <RadioBox
+                  key={option}
+                  name='bubbleContent'
+                  id={`bubbleContent-${option}`}
+                  checked={bubbleContent === option}
+                  onChange={() => setBubbleContent(option)}
+                >
+                  {option}
+                </RadioBox>
+              ))}
+            </form>
+            {/* Bubble Size */}
+            <form className='flex items-center gap-2'>
+              <span>Bubble Size:</span>
+              {bubbleSizeOptions.map((option) => (
+                <RadioBox
+                  key={option}
+                  name='bubbleSize'
+                  id={`bubbleSize-${option}`}
+                  checked={bubbleSize === option}
+                  onChange={() => setBubbleSize(option)}
+                >
+                  {option}
+                </RadioBox>
+              ))}
+            </form>
+            {/* Bubble Color Scheme */}
+            <form className='flex items-center gap-2'>
+              <span>Color Scheme:</span>
+              {colorSchemeOptions.map((option) => (
+                <RadioBox
+                  key={option}
+                  name='colorScheme'
+                  id={`colorScheme-${option}`}
+                  checked={bubbleColorScheme === option}
+                  onChange={() => setBubbleColorScheme(option)}
+                >
+                  {option}
+                </RadioBox>
+              ))}
+            </form>{' '}
+          </ModalBody>
         </Modal>
       )}
     </div>

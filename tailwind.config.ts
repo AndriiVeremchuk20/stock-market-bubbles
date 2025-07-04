@@ -12,6 +12,8 @@ const config: Config = {
       secondary: '#FFFF',
       green: '#008000',
       red: '#FF0000',
+      yellow: '#FFFF00',
+      blue: '#0000FF',
     },
   },
   plugins: [],
