@@ -48,7 +48,7 @@ export const PreferencesModal = ({
       </ModalHeader>
       <ModalBody className='flex flex-col gap-4'>
         <form className='flex items-center gap-2'>
-          <span>Bubble Content:</span>
+          <span className='text-sm sm:text-xl'>Bubble Content:</span>
           {bubbleContentOptions.map((option) => (
             <RadioBox
               key={option}
@@ -63,7 +63,7 @@ export const PreferencesModal = ({
         </form>
         {/* Bubble Size */}
         <form className='flex items-center gap-2'>
-          <span>Bubble Size:</span>
+          <span className='text-sm sm:text-xl'>Bubble Size:</span>
           {bubbleSizeOptions.map((option) => (
             <RadioBox
               key={option}
@@ -78,7 +78,7 @@ export const PreferencesModal = ({
         </form>
         {/* Bubble Color Scheme */}
         <form className='flex items-center gap-2'>
-          <span>Color Scheme:</span>
+          <span className='text-sm sm:text-xl'>Color Scheme:</span>
           {colorSchemeOptions.map((option) => (
             <RadioBox
               key={option}

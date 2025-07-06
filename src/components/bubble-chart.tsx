@@ -5,14 +5,23 @@ import { Stock } from '~/server/services/fmp-api';
 import * as d3 from 'd3';
 import {
   BubbleColorScheme,
-  BubbleSize,
+  BubbleContent,
   usePreferencesStore,
 } from '~/store/preferences';
+import { formatMarketCap } from '~/server/services/formatters';
 
 const colorsShemes: Record<BubbleColorScheme, string[]> = {
   'red-green': ['red', 'gray', 'green'],
   'blue-yellow': ['blue', 'gray', 'yellow'],
   neutral: ['white', 'white'],
+};
+
+const getBubbleContent = (d: Stock, content: BubbleContent) => {
+  if (content === 'beta')
+    return `${d.beta > 0 ? '+' : ''}${d.beta.toFixed(2)}%`;
+  else if (content === 'marketCap') return formatMarketCap(d.marketCap);
+
+  return formatMarketCap(d.volume);
 };
 
 export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
@@ -144,15 +153,7 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
       .attr('fill', 'white')
       .attr('font-size', (d) => `${fontSize(getRadiusValue(d)) - 4}px`)
       .attr('font-weight', 'bold')
-      .text((d) =>
-        bubbleContent === 'beta'
-          ? `${d.beta > 0 ? '+' : ''}${d.beta.toFixed(2)}%`
-          : bubbleContent === 'price'
-            ? 'price'
-            : bubbleContent === 'marketCap'
-              ? 'marketCap'
-              : 'volume'
-      );
+      .text((d) => getBubbleContent(d, bubbleContent));
 
     function ticked() {
       node.attr('transform', (d) => {

@@ -20,11 +20,7 @@ export const InfoModal = ({
   onClose: () => void;
 }) => {
   return (
-    <Modal
-      className='h-full w-full sm:h-2/3 sm:w-2/4'
-      isOpen={isOpen}
-      onClose={onClose}
-    >
+    <Modal className='h-fit w-min sm:w-1/4' isOpen={isOpen} onClose={onClose}>
       <ModalHeader className='flex gap-1'>
         <Info /> Information
       </ModalHeader>
@@ -91,7 +87,7 @@ export const InfoModal = ({
                 I&apos;m a full-stack developer who loves bringing ideas and
                 visions to life.
               </span>
-              <div className='flex flex-col justify-between gap-2 p-2 pt-4 sm:flex-row'>
+              <div className='flex flex-col flex-wrap justify-between gap-2 p-2 pt-4 sm:flex-row'>
                 <Link
                   href='https://github.com/AndriiVeremchuk20'
                   className='flex items-center gap-1 text-xl underline duration-200 hover:text-secondary/70'

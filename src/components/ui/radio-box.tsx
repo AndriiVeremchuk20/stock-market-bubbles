@@ -11,10 +11,10 @@ export const RadioBox = ({
   ...other
 }: RadioBoxProps) => {
   return (
-    <div className='w-fit'>
+    <div className='w-full'>
       <label
         htmlFor={id}
-        className='flex cursor-pointer border-2 border-secondary'
+        className='flex cursor-pointer rounded-sm border-2 border-secondary'
       >
         <input
           type='radio'
@@ -24,7 +24,7 @@ export const RadioBox = ({
           className={`peer hidden ${className ?? ''}`}
           {...other}
         />
-        <span className='w-full px-2 py-1 duration-200 peer-checked:bg-secondary peer-checked:text-primary'>
+        <span className='w-full p-1 text-sm duration-200 peer-checked:bg-secondary peer-checked:text-primary sm:text-xl'>
           {children}
         </span>
       </label>
