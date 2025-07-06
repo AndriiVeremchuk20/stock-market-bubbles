@@ -15,7 +15,11 @@ const bubbleContentOptions: BubbleContent[] = [
   'volume',
 ];
 const bubbleSizeOptions: BubbleSize[] = ['beta', 'marketCap', 'volume'];
-const colorSchemeOptions: BubbleColorScheme[] = ['r-g', 'b-y', 'neutral'];
+const colorSchemeOptions: BubbleColorScheme[] = [
+  'red-green',
+  'blue-yellow',
+  'neutral',
+];
 
 export const PreferencesModal = ({
   isOpen,
@@ -34,9 +38,13 @@ export const PreferencesModal = ({
   } = usePreferencesStore();
 
   return (
-    <Modal className='h-3/4 w-3/4' isOpen={isOpen} onClose={onClose}>
+    <Modal
+      className='text-md h-fit w-fit space-y-3 sm:text-xl'
+      isOpen={isOpen}
+      onClose={onClose}
+    >
       <ModalHeader className='flex gap-1'>
-        <SettingsIcon /> Settings
+        <SettingsIcon /> Preferences
       </ModalHeader>
       <ModalBody className='flex flex-col gap-4'>
         <form className='flex items-center gap-2'>

@@ -10,9 +10,9 @@ import {
 } from '~/store/preferences';
 
 const colorsShemes: Record<BubbleColorScheme, string[]> = {
-  'r-g': ['red', 'gray', 'green'],
-  'b-y': ['blue', 'gray', 'yellow'],
-  neutral: ['gray'],
+  'red-green': ['red', 'gray', 'green'],
+  'blue-yellow': ['blue', 'gray', 'yellow'],
+  neutral: ['white', 'white'],
 };
 
 export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
