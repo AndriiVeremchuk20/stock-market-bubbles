@@ -3,7 +3,7 @@
 1. -> [DONE] cache middleware
 2. -> [DONE] process errors on client
 3. -> [DONE] make /app/page.tsx a server component
-4. -> create settins (bubble size by vield, display market cap or price or volume, theme)
+4. -> [DONE] create settins (bubble size by vield, display market cap or price or volume, theme)
 5. -> [DONE] display data in table (tanstack table)
 6. -> [DONE] check image before getting to client
 7. -> [DONE] create 404 page

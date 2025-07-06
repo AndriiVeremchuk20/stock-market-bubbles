@@ -35,11 +35,10 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
 
   const isMoble = width < 768;
 
-  const diviveMaxRadius = bubbleSize === 'beta' ? 10 : 5; // used to make bubble size smaller when bubbleSize === "beta"
+  const diviveMaxRadius = bubbleSize === 'marketCap' ? 5 : 10; // used to make bubble size smaller
 
   useEffect(() => {
     const getRadiusValue = (d: Stock) => d[bubbleSize];
-    const valueByContent = (d: Stock) => d[bubbleContent];
 
     const svg = d3
       .select(svgRef.current)
@@ -121,7 +120,8 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
       .ease(d3.easeCubicOut)
       .attr('r', (d) => radiusScale(getRadiusValue(d)))
       .attr('stroke', (d) => scaleColor(d.beta))
-      .attr('stroke-width', '2px');
+      .attr('stroke-width', '2px')
+      .attr('cursot', 'pointer');
 
     node
       .append('image')
@@ -136,7 +136,7 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
       .attr('y', (d) => -radiusScale(getRadiusValue(d)) * 0.8)
       .attr('width', (d) => radiusScale(getRadiusValue(d)) * 0.8)
       .attr('height', (d) => radiusScale(getRadiusValue(d)) * 0.8)
-      .attr('clip-path', (d, i) => `url(#clip-${i})`);
+      .attr('clip-path', (_, i) => `url(#clip-${i})`);
 
     node
       .append('text')
