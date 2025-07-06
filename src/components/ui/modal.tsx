@@ -1,7 +1,8 @@
 import { AnimatePresence } from 'framer-motion';
-import { ComponentPropsWithRef, HTMLAttributes } from 'react';
+import { ComponentPropsWithRef, HTMLAttributes, useRef } from 'react';
 import { motion, MotionProps } from 'framer-motion';
 import { twMerge } from 'tailwind-merge';
+import { useClickOutside } from '~/hooks/use-click-outside';
 
 type ModalProps = {
   isOpen: boolean;
@@ -9,7 +10,11 @@ type ModalProps = {
 } & ComponentPropsWithRef<'div'> &
   MotionProps;
 
-export const Modal = ({ isOpen, onClose, ref, ...rest }: ModalProps) => {
+export const Modal = ({ isOpen, onClose, ...rest }: ModalProps) => {
+  const modalRef = useRef(null);
+
+  useClickOutside(modalRef, onClose);
+
   return (
     <AnimatePresence>
       {isOpen ? (
@@ -19,10 +24,10 @@ export const Modal = ({ isOpen, onClose, ref, ...rest }: ModalProps) => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.4 }}
-          onClick={onClose}
           className='absolute left-0 top-0 z-10 flex h-screen w-full items-center justify-center bg-secondary/20'
         >
           <motion.div
+            ref={modalRef}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0 }}

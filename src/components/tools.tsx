@@ -21,7 +21,6 @@ import {
   BubbleSize,
   usePreferencesStore,
 } from '~/store/preferences';
-import { useOnClickOutside } from 'usehooks-ts';
 
 const bubbleContentOptions: BubbleContent[] = [
   'beta',
@@ -44,14 +43,6 @@ export const Tools = () => {
     setBubbleContent,
     setBubbleColorScheme,
   } = usePreferencesStore();
-
-  const toolsRef = useRef(null);
-
-  const infoRef = useRef(null);
-
-  useOnClickOutside(toolsRef, () => {
-    setShowTools(false);
-  });
 
   return (
     <div className='flex items-center gap-3 sm:gap-10'>
@@ -163,7 +154,13 @@ export const Tools = () => {
         </Modal>
       )}
       {showTools && (
-        <Modal className='h-3/4 w-3/4' isOpen={showTools} onClose={() => {}}>
+        <Modal
+          className='h-3/4 w-3/4'
+          isOpen={showTools}
+          onClose={() => {
+            setShowTools(false);
+          }}
+        >
           <ModalHeader className='flex gap-1'>
             <SettingsIcon /> Settings
           </ModalHeader>

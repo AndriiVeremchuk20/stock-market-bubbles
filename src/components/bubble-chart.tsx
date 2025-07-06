@@ -3,7 +3,11 @@
 import { useEffect, useRef } from 'react';
 import { Stock } from '~/server/services/fmp-api';
 import * as d3 from 'd3';
-import { BubbleColorScheme, usePreferencesStore } from '~/store/preferences';
+import {
+  BubbleColorScheme,
+  BubbleSize,
+  usePreferencesStore,
+} from '~/store/preferences';
 
 const colorsShemes: Record<BubbleColorScheme, string[]> = {
   'r-g': ['red', 'gray', 'green'],
@@ -21,6 +25,8 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
   const height = window.innerHeight - 20;
 
   const isMoble = width < 768;
+
+  const diviveMaxRadius = bubbleSize === 'beta' ? 10 : 5; // used to make bubble size smaller when bubbleSize === "beta"
 
   useEffect(() => {
     const getRadiusValue = (d: Stock) => d[bubbleSize];
@@ -51,8 +57,11 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
       ])
       .range(
         isMoble
-          ? [20, Math.min(width, height) / 10]
-          : [30, Math.min(height, width) / 12]
+          ? [20, Math.min(width, height) / diviveMaxRadius]
+          : [
+              bubbleSize === 'beta' ? 20 : 40,
+              Math.min(height, width) / diviveMaxRadius,
+            ]
       );
 
     const simulation = d3
