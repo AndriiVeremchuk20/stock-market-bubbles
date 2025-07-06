@@ -33,7 +33,7 @@ export default function StockChartWrapper() {
   return (
     <div className='max-h-full min-h-screen'>
       {isLoading ? (
-        <Skeleton />
+        <Skeleton className='h-screen w-full' />
       ) : (
         <>
           <BuubleChart

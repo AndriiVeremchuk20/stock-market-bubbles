@@ -2,8 +2,6 @@ import { SimulationNodeDatum } from 'd3';
 import ky from 'ky';
 import { env } from '~/env.mjs';
 
-//const baseURL = "https://financialmodelingprep.com/stable/search-symbol?query=AAPL&apikey=1qRlxu0Wph1LOkFVhdgg0Grt0lDsvPH6";
-
 const baseURL = 'https://financialmodelingprep.com/api/v3/';
 const { FMP_API_KEY } = env;
 
