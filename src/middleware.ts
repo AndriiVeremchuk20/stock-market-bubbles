@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { redis } from './server/db/redis';
-import { Stock } from './server/services/fmp-api';
+import { Stock } from './types/stock';
 
 export const config = {
   matcher: '/api/:path*',

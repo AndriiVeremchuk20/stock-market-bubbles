@@ -12,8 +12,9 @@ import {
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
-import { Stock } from '~/server/services/fmp-api';
-import { formatMarketCap, formatPrice } from '~/server/services/formatters';
+import { formatLargeNumber } from '~/lib/format-large-number';
+import { formatPrice } from '~/lib/format-price';
+import { Stock } from '~/types/stock';
 
 const ch = createColumnHelper<Stock>();
 
@@ -42,11 +43,11 @@ const columns = [
   }),
   ch.accessor('marketCap', {
     header: 'Market Cap',
-    cell: (info) => formatMarketCap(info.getValue()),
+    cell: (info) => formatLargeNumber(info.getValue()),
   }),
   ch.accessor('volume', {
     header: 'Volume',
-    cell: (info) => formatMarketCap(info.getValue()),
+    cell: (info) => formatLargeNumber(info.getValue()),
   }),
   ch.accessor('beta', {
     header: 'Beta',
