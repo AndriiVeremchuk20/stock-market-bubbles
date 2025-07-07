@@ -1,10 +1,4 @@
-export const formatPrice = (price: number) =>
-  new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  }).format(price);
-
-export const formatMarketCap = (value: number) => {
+export const formatLargeNumber = (value: number) => {
   if (value >= 1_000_000_000_000) {
     return `$${(value / 1_000_000_000_000).toFixed(2)}T`;
   } else if (value >= 1_000_000_000) {

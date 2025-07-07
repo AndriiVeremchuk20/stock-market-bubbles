@@ -1,14 +1,17 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { Stock } from '~/server/services/fmp-api';
 import * as d3 from 'd3';
 import {
   BubbleColorScheme,
   BubbleContent,
   usePreferencesStore,
 } from '~/store/preferences';
-import { formatMarketCap } from '~/server/services/formatters';
+import { formatLargeNumber } from '~/lib/format-large-number';
+import { Stock } from '~/types/stock';
+import Routes from '~/constants/routes';
+
+interface SimulationStockNodeDatum extends Stock, d3.SimulationNodeDatum {}
 
 const colorsShemes: Record<BubbleColorScheme, string[]> = {
   'red-green': ['red', 'gray', 'green'],
@@ -19,12 +22,19 @@ const colorsShemes: Record<BubbleColorScheme, string[]> = {
 const getBubbleContent = (d: Stock, content: BubbleContent) => {
   if (content === 'beta')
     return `${d.beta > 0 ? '+' : ''}${d.beta.toFixed(2)}%`;
-  else if (content === 'marketCap') return formatMarketCap(d.marketCap);
+  else if (content === 'marketCap') return formatLargeNumber(d.marketCap);
 
-  return formatMarketCap(d.volume);
+  return formatLargeNumber(d.volume);
 };
 
-export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
+export const BubbleChart = ({ data }: { data: Stock[] }) => {
+  const stockDataList: SimulationStockNodeDatum[] = data.map((d) => ({
+    ...d,
+    x: 0,
+    y: 0,
+    vx: 0,
+    vy: 0,
+  }));
   const svgRef = useRef<SVGSVGElement | null>(null);
 
   const { bubbleSize, bubbleContent, bubbleColorScheme } =
@@ -131,7 +141,7 @@ export const BuubleChart = ({ stockDataList }: { stockDataList: Stock[] }) => {
       .transition()
       .duration(500)
       .ease(d3.easeCubicOut)
-      .attr('href', (d) => `api/stock/image/${d.symbol}`)
+      .attr('href', (d) => `${Routes.api.stock.image}/${d.symbol}`)
       .attr('x', (d) => -radiusScale(getRadiusValue(d)) * 0.4)
       .attr('y', (d) => -radiusScale(getRadiusValue(d)) * 0.8)
       .attr('width', (d) => radiusScale(getRadiusValue(d)) * 0.8)

@@ -1,6 +1,6 @@
-import { SimulationNodeDatum } from 'd3';
 import ky from 'ky';
 import { env } from '~/env.mjs';
+import { Stock } from '~/types/stock';
 
 const baseURL = 'https://financialmodelingprep.com/api/v3/';
 const { FMP_API_KEY } = env;
@@ -11,23 +11,6 @@ const FMPClient = ky.create({
     apikey: FMP_API_KEY,
   },
 });
-
-export interface Stock extends SimulationNodeDatum {
-  symbol: string;
-  companyName: string;
-  marketCap: number;
-  sector: string;
-  industry: string;
-  beta: number;
-  price: number;
-  lastAnnualDividend: number;
-  volume: number;
-  exchange: string;
-  exchangeShortName: string;
-  country: string;
-  isEtf: boolean;
-  isActivelyTrading: boolean;
-}
 
 // screener
 export const getStockData = async (searchParams: {

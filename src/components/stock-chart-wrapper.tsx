@@ -2,10 +2,11 @@
 
 import { AppStore } from '~/store/app';
 import useSWR from 'swr';
-import { Stock } from '~/server/services/fmp-api';
-import { BuubleChart } from './bubble-chart';
+import { BubbleChart } from './bubble-chart';
 import { Skeleton } from './skeleton';
 import { StockTable } from './stock-table';
+import { Stock } from '~/types/stock';
+import Routes from '~/constants/routes';
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
@@ -19,7 +20,7 @@ export default function StockChartWrapper() {
   if (sort === 'gainers') queryParams.append('betaMoreThan', '5');
 
   const { data, isLoading } = useSWR<{ data: Stock[] }>(
-    `/api/stock/screener?${queryParams.toString()}`,
+    `${Routes.api.stock.screener}?${queryParams.toString()}`,
     fetcher,
     {
       refreshInterval: 60 * 3600,
@@ -36,10 +37,7 @@ export default function StockChartWrapper() {
         <Skeleton className='h-screen w-full' />
       ) : (
         <>
-          <BuubleChart
-            stockDataList={data!.data}
-            key={`key:${skip}${limit}${sort}`}
-          />
+          <BubbleChart data={data!.data} key={`key:${skip}${limit}${sort}`} />
           <div className='hidden md:block'>
             <StockTable data={data!.data} />
           </div>
