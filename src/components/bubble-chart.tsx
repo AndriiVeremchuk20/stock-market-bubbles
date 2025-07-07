@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 import * as d3 from 'd3';
 import {
   BubbleColorScheme,
@@ -27,7 +27,7 @@ const getBubbleContent = (d: Stock, content: BubbleContent) => {
   return formatLargeNumber(d.volume);
 };
 
-export const BubbleChart = ({ data }: { data: Stock[] }) => {
+const BubbleChart = ({ data }: { data: Stock[] }) => {
   const stockDataList: SimulationStockNodeDatum[] = data.map((d) => ({
     ...d,
     x: 0,
@@ -40,16 +40,21 @@ export const BubbleChart = ({ data }: { data: Stock[] }) => {
   const { bubbleSize, bubbleContent, bubbleColorScheme } =
     usePreferencesStore();
 
-  const width = window.innerWidth - 20;
-  const height = window.innerHeight - 20;
-
-  const isMoble = width < 768;
+  const { width, height, isMobile } = useMemo(() => {
+    const w = window.innerWidth - 20;
+    const h = window.innerHeight - 20;
+    return {
+      width: w,
+      height: h,
+      isMobile: w < 768,
+    };
+  }, []);
 
   const diviveMaxRadius = bubbleSize === 'marketCap' ? 5 : 10; // used to make bubble size smaller
 
-  useEffect(() => {
-    const getRadiusValue = (d: Stock) => d[bubbleSize];
+  const getRadiusValue = useCallback((d: Stock) => d[bubbleSize], [bubbleSize]);
 
+  useEffect(() => {
     const svg = d3
       .select(svgRef.current)
       .attr('width', width)
@@ -65,7 +70,7 @@ export const BubbleChart = ({ data }: { data: Stock[] }) => {
     const fontSize = d3
       .scaleSqrt()
       .domain([-10, d3.max(stockDataList, (d) => getRadiusValue(d))!])
-      .range(isMoble ? [10, 15] : [10, 25]);
+      .range(isMobile ? [10, 15] : [10, 25]);
 
     const radiusScale = d3
       .scaleSqrt()
@@ -74,7 +79,7 @@ export const BubbleChart = ({ data }: { data: Stock[] }) => {
         d3.max(stockDataList, (d) => getRadiusValue(d))!,
       ])
       .range(
-        isMoble
+        isMobile
           ? [20, Math.min(width, height) / diviveMaxRadius]
           : [
               bubbleSize === 'beta' ? 20 : 40,
@@ -131,12 +136,12 @@ export const BubbleChart = ({ data }: { data: Stock[] }) => {
       .attr('r', (d) => radiusScale(getRadiusValue(d)))
       .attr('stroke', (d) => scaleColor(d.beta))
       .attr('stroke-width', '2px')
-      .attr('cursot', 'pointer');
+      .attr('cursor', 'pointer');
 
     node
       .append('image')
       .attr('display', (d) =>
-        radiusScale(getRadiusValue(d)) < (isMoble ? 12 : 32) ? 'none' : null
+        radiusScale(getRadiusValue(d)) < (isMobile ? 12 : 32) ? 'none' : null
       )
       .transition()
       .duration(500)
@@ -204,3 +209,5 @@ export const BubbleChart = ({ data }: { data: Stock[] }) => {
     </div>
   );
 };
+
+export default memo(BubbleChart);

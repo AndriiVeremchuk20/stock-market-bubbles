@@ -2,7 +2,7 @@
 
 import { AppStore } from '~/store/app';
 import useSWR from 'swr';
-import { BubbleChart } from './bubble-chart';
+import BubbleChart from './bubble-chart';
 import { Skeleton } from './skeleton';
 import { StockTable } from './stock-table';
 import { Stock } from '~/types/stock';
