@@ -19,21 +19,25 @@ export const getStockData = async (searchParams: {
   limit?: number;
   volumeMoreThan?: number;
 }) => {
-  const sp = Object.entries(searchParams)
-    .filter(([_, value]) => value !== undefined)
-    .reduce(
-      (acc, [key, value]) => {
-        acc[key] = value;
-        return acc;
-      },
-      {} as Record<string, number>
-    );
+  try {
+    const sp = Object.entries(searchParams)
+      .filter(([_, value]) => value !== undefined)
+      .reduce(
+        (acc, [key, value]) => {
+          acc[key] = value;
+          return acc;
+        },
+        {} as Record<string, number>
+      );
 
-  const data = await FMPClient.get('stock-screener', {
-    searchParams: { ...sp, isActivelyTrading: true },
-  }).json<Stock[]>();
+    const data = await FMPClient.get('stock-screener', {
+      searchParams: { ...sp, isActivelyTrading: true },
+    }).json<Stock[]>();
 
-  return data.filter((i) => i.beta);
+    return data.filter((i) => i.beta);
+  } catch (e) {
+    throw e;
+  }
 };
 
 export const getImageUrl = ({ symbol }: { symbol: string }) =>

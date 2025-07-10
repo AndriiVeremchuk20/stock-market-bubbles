@@ -40,6 +40,8 @@ export const GET = async (req: Request) => {
   try {
     const data = await getStockData({ ...args });
 
+    if (!Array.isArray(data)) throw Error('Api Failure');
+
     const orderedData = data
       .sort((a, b) => b.volume - a.volume)
       .slice(skip, skip + limit);
